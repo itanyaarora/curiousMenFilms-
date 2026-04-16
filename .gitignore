@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# One-shot build scripts + local backup (not for deploy)
+.compress-images.py
+.convert-to-jpg.py
+.generate-og-favicon.py
+.originals-backup/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude Code memory (local only)
+.claude/
+
+# Logs / temp
+*.log
+tmp/
+temp/
+
+# Node (if you later add a build step)
+node_modules/
+dist/
+build/
+.env
+.env.local

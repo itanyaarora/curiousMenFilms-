@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<!--
+  spellcheck="false" on <html> cascades to every descendant — without
+  this, browsers (and extensions like Grammarly / LanguageTool) mark
+  proper nouns and non-English words as misspellings. The site features
+  Indian founder names, company brands, Hindi words, etc., which would
+  all get red squiggly underlines otherwise.
+  translate="no" keeps Google Translate from mangling the brand copy.
+-->
+<html lang="en" spellcheck="false" translate="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Curious Men Films — Stories of India's Builders</title>
+  <meta name="description" content="Curious Men Films is an independent studio telling the untold stories of Indian founders building global software — documentaries, docu-series, and feature films." />
+  <meta name="author" content="Curious Men Films" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://curiousmenfilms.com/" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+  <!-- Open Graph (LinkedIn, Slack, iMessage, WhatsApp previews) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Curious Men Films" />
+  <meta property="og:url" content="https://curiousmenfilms.com/" />
+  <meta property="og:title" content="Curious Men Films — Stories of India's Builders" />
+  <meta property="og:description" content="An independent studio telling the untold stories of Indian founders building global software." />
+  <meta property="og:image" content="https://curiousmenfilms.com/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Curious Men Films — Stories of the builders shaping India's future." />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Curious Men Films — Stories of India's Builders" />
+  <meta name="twitter:description" content="An independent studio telling the untold stories of Indian founders building global software." />
+  <meta name="twitter:image" content="https://curiousmenfilms.com/assets/og-image.jpg" />
+
+  <!-- Swiper — carousel for Our Work section -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="style.css?v=282" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- JSON-LD structured data for rich search results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Curious Men Films",
+    "url": "https://curiousmenfilms.com/",
+    "logo": "https://curiousmenfilms.com/favicon-512.png",
+    "description": "An independent studio telling the untold stories of Indian founders building global software.",
+    "email": "connect@curiousmenfilms.com",
+    "sameAs": []
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ===== SKIP-TO-CONTENT LINK (WCAG 2.4.1) =====
+       Visually hidden until focused; lets keyboard users jump past the
+       intro loader + navbar straight to the main content. -->
+  <a href="#main" class="skip-to-content">Skip to main content</a>
+
+  <!-- ===== ANIMATED BORDER ===== -->
+  <div class="sw-border-top"><div class="sw-border-fill"></div></div>
+  <div class="sw-border-right"><div class="sw-border-fill"></div></div>
+  <div class="sw-border-bottom"><div class="sw-border-fill"></div></div>
+  <div class="sw-border-left"><div class="sw-border-fill"></div></div>
+
+  <!-- ===== INTRO LOADER ===== -->
+  <div class="sw-loader" id="swLoader">
+    <div class="sw-loader-content">
+      <div class="sw-text-block" id="swTextBlock">
+        <div class="sw-line-mask"><span class="sw-line">Hello, we are</span></div>
+        <div class="sw-line-mask"><span class="sw-line sw-line-gradient" id="swGradientLine">Curious Men Films.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <img src="assets/cmflogo2.png" alt="CMF" class="nav-logo-img" />
+      </a>
+      <!-- Hamburger button (mobile only) -->
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="#about" class="nav-link">Our Journey</a>
+        <a href="#our-work" class="nav-link">Our Work</a>
+        <a href="#team" class="nav-link">The Team</a>
+        <a href="#contact" class="nav-btn">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT (WCAG 1.3.1 landmark) ===== -->
+  <main id="main">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-text-content">
+      <div class="hero-logo">
+        <img src="assets/cmflogo1.png" alt="Curious Men Films" class="hero-logo-img" />
+      </div>
+      <h1 class="hero-heading">
+        <div class="hero-line-mask"><span class="hero-line">We celebrate</span></div>
+        <div class="hero-line-mask"><span class="hero-line"><span class="hero-gradient-word" id="heroGradientWord">entrepreneurship</span></span></div>
+        <div class="hero-line-mask"><span class="hero-line">through filmmaking.</span></div>
+      </h1>
+      <p class="hero-sub" id="heroSub">Cricketers become legends. Film stars become icons. But India's founders — who risk everything to build from nothing — their story goes untold. We're the studio changing that.</p>
+    </div>
+    <!-- Expanding video preview — merges into journey section -->
+    <div class="hero-video-wrap" id="heroVideoWrap">
+      <video src="assets/cmf_studio2.mp4" class="hero-video" muted loop autoplay playsinline aria-hidden="true"></video>
+      <div class="hero-journey-overlay" id="heroJourneyOverlay">
+        <img src="assets/ourjourney.png" alt="Our Journey" class="hero-journey-logo" />
+      </div>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="scroll-dot"></div>
+    </div>
+  </section>
+
+  <!-- ===== WE MAKE IT / WE TAKE IT =====
+       Architecture:
+       - .wmi-pin-wrap: 300vh tall, pulled up -100vh so it sits behind hero
+       - .wmi-section: position:sticky inside wrap — pins for 200vh of scroll
+       - The whole section (video + caption) stays ROCK-STILL while hero
+         card lifts off, then the rounded-corner page scrolls up naturally. -->
+  <div class="wmi-pin-wrap">
+    <section class="wmi-section" id="what-we-do">
+      <div class="wmi-video-card">
+        <video
+          class="wmi-video"
+          src="assets/cmf_bts/bts_movie.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-hidden="true"
+        ></video>
+      </div>
+      <div class="wmi-text-block">
+        <h2 class="wmi-heading">
+          <div class="wmi-line-mask"><span class="wmi-line wmi-line-1">We Make It</span></div>
+          <div class="wmi-line-mask"><span class="wmi-line wmi-line-2 wmi-amp">&amp;</span></div>
+          <div class="wmi-line-mask"><span class="wmi-line wmi-line-3">We Take It To The World.</span></div>
+        </h2>
+        <p class="wmi-sub">Two pillars. One mission. Nothing in between.</p>
+      </div>
+
+      <!-- Production + Distribution cards: hidden, stacked at center behind
+           the video. Scroll-driven JS fades them in and splits them L/R once
+           the video has lifted off and the text has shrunk up.
+           NOTE: these contain real <h3> content ("Production", "Distribution")
+           so they must NOT be aria-hidden — screen readers need the info. -->
+      <div class="wmi-cards">
+        <div class="wmi-card wmi-card-prod">
+          <div class="wmi-card-header">
+            <div class="wmi-card-icon">🎬</div>
+            <h3 class="wmi-card-title">Production</h3>
+          </div>
+          <div class="wmi-card-body">
+            <p>From concept to screen — we film documentaries, docu-series, and branded content that captures the entrepreneurial spirit of India.</p>
+            <p>We've traveled across 21 cities, sat with 100+ founders, and built a production pipeline that turns raw stories into cinematic experiences.</p>
+          </div>
+        </div>
+        <div class="wmi-card wmi-card-dist">
+          <div class="wmi-card-header">
+            <div class="wmi-card-icon">📡</div>
+            <h3 class="wmi-card-title">Distribution</h3>
+          </div>
+          <div class="wmi-card-body">
+            <p>We take these stories to the world — through streaming platforms, film festivals, and digital channels that reach the audiences who need to hear them.</p>
+            <p>Our distribution network spans OTT platforms, YouTube, social media, and on-ground screenings to maximize impact and reach.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== WHAT WE DO (legacy — hidden) ===== -->
+  <section class="what-we-do-section" id="what-we-do-legacy" style="display:none">
+    <div class="wwd-sticky" id="wwdSticky">
+      <div class="wwd-top">
+        <span class="wwd-label">WHAT WE DO</span>
+        <h2 class="wwd-heading">We produce and distribute<br><span class="wwd-accent">stories that matter.</span></h2>
+      </div>
+      <div class="wwd-pill">
+        <div class="wwd-col" id="wwdCardProd" data-side="left">
+          <div class="wwd-col-header">
+            <div class="wwd-col-icon">🎬</div>
+            <h3 class="wwd-col-title">Production</h3>
+          </div>
+          <div class="wwd-col-body">
+            <p>From concept to screen — we film documentaries, docu-series, and branded content that captures the entrepreneurial spirit of India.</p>
+            <p>We've traveled across 21 cities, sat with 100+ founders, and built a production pipeline that turns raw stories into cinematic experiences.</p>
+          </div>
+        </div>
+        <div class="wwd-col" id="wwdCardDist" data-side="right">
+          <div class="wwd-col-header">
+            <div class="wwd-col-icon">📡</div>
+            <h3 class="wwd-col-title">Distribution</h3>
+          </div>
+          <div class="wwd-col-body">
+            <p>We take these stories to the world — through streaming platforms, film festivals, and digital channels that reach the audiences who need to hear them.</p>
+            <p>Our distribution network spans OTT platforms, YouTube, social media, and on-ground screenings to maximize impact and reach.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT / HISTORY — single sticky viewport ===== -->
+  <div class="history-master" id="about-v1-hidden" style="display:none">
+    <div class="history-master-sticky">
+
+      <!-- Layer 1: transparent overlay — hero video shows through, then zooms to timeline -->
+      <div class="history-intro-layer" id="historyIntroLayerV1Hidden"></div>
+
+      <!-- Layer 2: Horizontal scroll (fades in, then scrolls) -->
+      <div class="history-hscroll-layer" id="historyHscrollLayerV1Hidden">
+          <div class="journey-bg-layers">
+            <div class="journey-bg-glow"></div>
+            <div class="journey-bg-grid"></div>
+          </div>
+          <!-- Title stays fixed while track scrolls -->
+        <h2 class="tl-title heading-hover">Our Journey.</h2>
+        <div class="history-hscroll-track" id="historyTrackV1Hidden">
+
+          <!-- Timeline curved thread (generated by JS) -->
+          <svg class="tl-thread-svg" id="tlThreadSvgV1Hidden" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="tlGradientV1Hidden" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#4A20B0" />
+                <stop offset="50%" stop-color="#7B4FE0" />
+                <stop offset="100%" stop-color="#F7C948" />
+              </linearGradient>
+            </defs>
+            <path id="tlThreadBgV1Hidden" class="tl-thread-path-bg" fill="none" />
+            <path id="tlThreadFillV1Hidden" class="tl-thread-path-fill" fill="none" />
+            <circle id="tlThreadDotV1Hidden" r="5" fill="#4A20B0" opacity="0">
+              <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite" />
+            </circle>
+          </svg>
+
+          <!-- Intro text column -->
+          <div class="tl-col">
+            <div class="tl-intro-block">
+              <p class="tl-intro-text">When Curious Men Films set out to tell the stories of India's founders, they didn't know the journey would take them across 21 cities and into the lives of over 100 entrepreneurs.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" style="padding-top: 100px; --r: -4deg;">
+              <div class="tl-img tl-float" style="animation-delay: 0s;"><img src="assets/journey1.jpg" alt="" /></div>
+              <span class="tl-year">2016</span>
+              <p>Ritesh and Aniruddha crossed paths in Mumbai during their internship at Sikhya Entertainment. A shared love for storytelling brought them together.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" style="padding-top: 30px; --r: -2deg;">
+              <div class="tl-img tl-float" style="animation-delay: 1s;"><img src="assets/journey2.jpg" alt="" /></div>
+              <span class="tl-year">2017</span>
+              <p>They decided to stop waiting and start making. Curious Men Films was founded with one goal — tell stories that matter.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" style="padding-top: 70px; --r: 0deg;">
+              <div class="tl-img tl-float" style="animation-delay: 2s;"><img src="assets/journey2018.jpg" alt="" /></div>
+              <span class="tl-year">2018</span>
+              <p>From music videos and short films to ads and corporate films — they worked with brands like Air India, Amul, Kingfisher, Practo & Aditya Birla.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" style="padding-top: 150px; --r: 4deg;">
+              <div class="tl-img tl-float" style="animation-delay: 0.5s;"><img src="assets/journey4.JPG" alt="" /></div>
+              <span class="tl-year">2022</span>
+              <p>While shooting TechSparks in Bangalore, they met Prateek Sethi — and discovered Shifu Ventures and Shifu Foundation.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" style="padding-top: 30px; --r: -2deg;">
+              <div class="tl-img tl-float" style="animation-delay: 1.5s;"><img src="assets/journey2024.JPG" alt="" /></div>
+              <span class="tl-year">2024</span>
+              <p>They hit the road and traveled across 21 cities, filming founders from the most unexpected corners of India.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" style="padding-top: 70px; --r: 4deg;">
+              <div class="tl-img tl-float" style="animation-delay: 2.5s;"><img src="assets/journey2026.jpg" alt="" /></div>
+              <span class="tl-year">2026</span>
+              <p>The journey became a film. Against All Odds was completed in 2026 — and with it, a new niche was born.</p>
+            </div>
+          </div>
+
+          <div style="flex: 0 0 100px;"></div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== ABOUT / HISTORY V2 — Experimental with map (hidden by default) ===== -->
+  <!-- To enable: change style="display:none" to style="display:block" on the wrapper below, and add display:none to #about above -->
+  <div class="history-master history-master-v2" id="about">
+    <div class="history-master-sticky">
+
+      <!-- Layer 1: CMF Studio video background — zooms toward the monitor screen. -->
+      <div class="history-intro-layer" id="historyIntroLayer">
+        <video class="history-intro-video" src="assets/cmf_studio2.mp4" muted loop autoplay playsinline preload="metadata" aria-hidden="true"></video>
+        <div class="intro-screen-text" id="introScreenText">
+          <img src="assets/our_joruney_image.png" alt="Our Journey" class="intro-screen-img" />
+        </div>
+      </div>
+
+      <!-- Layer 2: Horizontal scroll (fades in, then scrolls) -->
+      <div class="history-hscroll-layer" id="historyHscrollLayer">
+          <div class="journey-bg-layers">
+            <div class="journey-bg-glow"></div>
+            <div class="journey-bg-grid"></div>
+          </div>
+
+          <!-- Title stays fixed while track scrolls -->
+        <h2 class="tl-title heading-hover">Our Journey.</h2>
+        <div class="history-hscroll-track" id="historyTrack">
+
+          <!-- Timeline curved thread (generated by JS) -->
+          <svg class="tl-thread-svg" id="tlThreadSvg" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="tlGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#4A20B0" />
+                <stop offset="50%" stop-color="#7B4FE0" />
+                <stop offset="100%" stop-color="#F7C948" />
+              </linearGradient>
+            </defs>
+            <path id="tlThreadBg" class="tl-thread-path-bg" fill="none" />
+            <path id="tlThreadFill" class="tl-thread-path-fill" fill="none" />
+            <circle id="tlThreadDot" r="5" fill="#4A20B0" opacity="0">
+              <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite" />
+            </circle>
+          </svg>
+
+          <!-- Intro text column -->
+          <div class="tl-col">
+            <div class="tl-intro-block">
+              <p class="tl-intro-text">When Curious Men Films set out to tell the stories of India's founders, they didn't know the journey would take them across 21 cities and into the lives of over 100 entrepreneurs.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" data-city="mumbai" style="margin-top: 100px; --r: -4deg;">
+              <div class="tl-img tl-float" style="animation-delay: 0s;"><img src="assets/journey1.jpg" alt="" /></div>
+              <span class="tl-year">2016</span>
+              <p>Ritesh and Aniruddha crossed paths in Mumbai during their internship at Sikhya Entertainment. A shared love for storytelling brought them together.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" data-city="mumbai" style="margin-top: 30px; --r: -2deg;">
+              <div class="tl-img tl-float" style="animation-delay: 1s;"><img src="assets/journey2.jpg" alt="" /></div>
+              <span class="tl-year">2017</span>
+              <p>They decided to stop waiting and start making. Curious Men Films was founded with one goal — tell stories that matter.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" data-city="mumbai" style="margin-top: 70px; --r: 0deg;">
+              <div class="tl-img tl-float" style="animation-delay: 2s;"><img src="assets/journey2018.jpg" alt="" /></div>
+              <span class="tl-year">2018</span>
+              <p>From music videos and short films to ads and corporate films — they worked with brands like Air India, Amul, Kingfisher, Practo & Aditya Birla.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" data-city="bangalore" style="margin-top: 150px; --r: 4deg;">
+              <div class="tl-img tl-float" style="animation-delay: 0.5s;"><img src="assets/journey4.JPG" alt="" /></div>
+              <span class="tl-year">2022</span>
+              <p>While shooting TechSparks in Bangalore, they met Prateek Sethi — and discovered Shifu Ventures and Shifu Foundation.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" data-city="india" style="margin-top: 30px; --r: -2deg;">
+              <div class="tl-img tl-float" style="animation-delay: 1.5s;"><img src="assets/journey2024.JPG" alt="" /></div>
+              <span class="tl-year">2024</span>
+              <p>They hit the road and traveled across 21 cities, filming founders from the most unexpected corners of India.</p>
+            </div>
+          </div>
+
+          <div class="tl-col">
+            <div class="tl-piece" data-city="india" style="margin-top: 70px; --r: 4deg;">
+              <div class="tl-img tl-float" style="animation-delay: 2.5s;"><img src="assets/journey2026.jpg" alt="" /></div>
+              <span class="tl-year">2026</span>
+              <p>The journey became a film. Against All Odds was completed in 2026 — and with it, a new niche was born.</p>
+            </div>
+          </div>
+
+          <div style="flex: 0 0 calc(50vw - 320px);"></div>
+
+        </div>
+
+        <!-- Skip button (mobile only, floating) -->
+        <button class="tl-skip-btn" onclick="document.querySelector('#our-work').scrollIntoView({behavior:'smooth'})" aria-label="Skip to Our Work">&darr;</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OUR WORK ===== -->
+  <section class="section our-work" id="our-work">
+    <div class="ow-inner">
+      <h2 class="ow-heading fade-in"><span class="ow-heading-accent">Already in the field.</span></h2>
+      <p class="ow-sub fade-in">Three productions — completed, in production, and coming. This is the track record.</p>
+
+      <!-- Featured video — Against All Odds -->
+      <div class="ow-featured-video fade-in" id="owFeaturedVideo">
+        <img src="https://img.youtube.com/vi/IUJFyV2JA6M/maxresdefault.jpg" alt="Against All Odds — Watch Now" class="ow-video-thumb" />
+        <button class="ow-video-play" id="owVideoPlay" aria-label="Play Against All Odds">
+          <svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.5 7.7c-.8-2.9-3-5.1-5.9-5.9C55.3.1 34 0 34 0S12.7.1 7.4 1.8c-2.9.8-5.1 3-5.9 5.9C0 13 0 24 0 24s0 11 1.5 16.3c.8 2.9 3 5.1 5.9 5.9C12.7 48 34 48 34 48s21.3 0 26.6-1.8c2.9-.8 5.1-3 5.9-5.9C68 35 68 24 68 24s0-11-1.5-16.3z" fill="rgba(0,0,0,0.7)"/><path d="M45 24L27 14v20" fill="#fff"/></svg>
+        </button>
+      </div>
+
+      <!-- Carousel — three poster cards -->
+      <div class="ow-carousel-wrap fade-in">
+        <div class="swiper ow-swiper">
+          <div class="swiper-wrapper">
+
+            <!-- Slide 1: Against All Odds -->
+            <div class="swiper-slide ow-slide"
+                 data-tag="Documentary"
+                 data-title="Against All Odds"
+                 data-desc="A film on people building software from the most unexpected parts of the country."
+                 data-status="Releasing &middot; 2026"
+                 data-cta-text="Watch on YouTube"
+                 data-cta-href="https://www.youtube.com/watch?v=IUJFyV2JA6M">
+              <img src="assets/posters/AgainstAllOdds.jpg" alt="Against All Odds" />
+            </div>
+
+            <!-- Slide 2: Unheard Voices -->
+            <div class="swiper-slide ow-slide"
+                 data-tag="Docu-Series"
+                 data-title="Unheard Voices"
+                 data-desc="Stories of the bootstrapped founders of India building and scaling global software products without any external support or funding."
+                 data-status="Coming Soon &middot; 2026"
+                 data-cta-text=""
+                 data-cta-href="">
+              <img src="assets/posters/Bootstrapped.jpg" alt="Unheard Voices" />
+            </div>
+
+            <!-- Slide 3: The Economy Class Founder -->
+            <div class="swiper-slide ow-slide"
+                 data-tag="Feature Film"
+                 data-title="The Economy Class Founder"
+                 data-desc="The story of Manasij Ganguly, the founder of Zapscale — adapted into a cinematic screenplay for a full length feature film."
+                 data-status="In Production &middot; 2026"
+                 data-cta-text=""
+                 data-cta-href="">
+              <img src="assets/posters/tecf.jpg" alt="The Economy Class Founder" />
+            </div>
+
+            <!-- Duplicates for seamless loop (Swiper needs 2×slidesPerView) -->
+            <div class="swiper-slide ow-slide" data-tag="Documentary" data-title="Against All Odds" data-desc="A film on people building software from the most unexpected parts of the country." data-status="Releasing &middot; 2026" data-cta-text="Watch on YouTube" data-cta-href="https://www.youtube.com/watch?v=IUJFyV2JA6M">
+              <img src="assets/posters/AgainstAllOdds.jpg" alt="Against All Odds" />
+            </div>
+            <div class="swiper-slide ow-slide" data-tag="Docu-Series" data-title="Unheard Voices" data-desc="Stories of the bootstrapped founders of India building and scaling global software products without any external support or funding." data-status="Coming Soon &middot; 2026" data-cta-text="" data-cta-href="">
+              <img src="assets/posters/Bootstrapped.jpg" alt="Unheard Voices" />
+            </div>
+            <div class="swiper-slide ow-slide" data-tag="Feature Film" data-title="The Economy Class Founder" data-desc="The story of Manasij Ganguly, the founder of Zapscale — adapted into a cinematic screenplay for a full length feature film." data-status="In Production &middot; 2026" data-cta-text="" data-cta-href="">
+              <img src="assets/posters/tecf.jpg" alt="The Economy Class Founder" />
+            </div>
+
+          </div>
+          <!-- Pagination dots -->
+          <div class="swiper-pagination ow-pagination"></div>
+        </div>
+
+        <!-- Info panel — updates to show the active (center) slide's details -->
+        <div class="ow-slide-info" id="owSlideInfo">
+          <span class="ow-slide-tag" id="owSlideTag">Documentary</span>
+          <h3 class="ow-slide-title" id="owSlideTitle">Against All Odds</h3>
+          <p class="ow-slide-desc" id="owSlideDesc">A film on people building software from the most unexpected parts of the country.</p>
+          <div class="ow-slide-bottom">
+            <span class="ow-slide-status" id="owSlideStatus">Releasing &middot; 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOUNDERS — Scroll scatter (dark) ===== -->
+  <section class="founders-scatter" id="founders">
+
+    <div class="fs-bg-glow"></div>
+    <div class="fs-bg-noise"></div>
+
+    <div class="founders-scatter-sticky">
+
+      <!-- Hero text stays centered -->
+      <div class="fs-hero-text">
+        <span class="fs-hero-number" id="fsCounter">0+</span>
+        <span class="fs-hero-title">Founders Filmed</span>
+        <p class="fs-hero-sub">From seed-stage to unicorns. Across 21 cities.</p>
+      </div>
+
+      <!-- 21 real founder cards — radial scatter on scroll.
+           Indexes must match `scatterData` in script.js exactly:
+             0..3   → INNER ring (4 cards: NW, NE, SW, SE — closest to heading)
+             4..11  → MIDDLE ring (8 compass points around heading)
+             12..20 → OUTER ring (9 cards on the far perimeter)
+
+           High-recognition founders (Dheeraj/Khadim/Yamini/Karan) live in
+           the inner ring for visual emphasis.
+
+           Each card is an <a> so the whole card is clickable → opens the
+           founder's LinkedIn search in a new tab. The default state shows
+           a compact pill (avatar + name + company). On hover the card
+           expands vertically to reveal the role and a "View profile →"
+           cue, and an animated gradient border spins around the edge. -->
+
+      <div class="fs-cards-scroll-wrap">
+      <!-- ---- Inner ring (4) ---- -->
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Dheeraj%20Pandey%20DevRev" target="_blank" rel="noopener" aria-label="Dheeraj Pandey, Co-Founder & CEO of DevRev"><div class="fs-avatar"><img src="assets/Founder Photos/dheeraj-pandey-devrev.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Dheeraj Pandey</span><small class="fs-card-co">DevRev</small><em class="fs-card-role">Co-Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Khadim%20Batti%20Whatfix" target="_blank" rel="noopener" aria-label="Khadim Batti, Co-Founder & CEO of Whatfix"><div class="fs-avatar"><img src="assets/Founder Photos/khadim-batti-whatfix.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Khadim Batti</span><small class="fs-card-co">Whatfix</small><em class="fs-card-role">Co-Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Yamini%20Bhat%20Vymo" target="_blank" rel="noopener" aria-label="Yamini Bhat, Co-Founder & CEO of Vymo"><div class="fs-avatar"><img src="assets/Founder Photos/yamini-bhat-vymo.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Yamini Bhat</span><small class="fs-card-co">Vymo</small><em class="fs-card-role">Co-Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Karan%20Virwani%20WeWork%20India" target="_blank" rel="noopener" aria-label="Karan Virwani, CEO of WeWork India"><div class="fs-avatar"><img src="assets/Founder Photos/karan-virwani-wework.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Karan Virwani</span><small class="fs-card-co">WeWork India</small><em class="fs-card-role">CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+
+      <!-- ---- Middle ring (8) ---- -->
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Shradha%20Sharma%20YourStory" target="_blank" rel="noopener" aria-label="Shradha Sharma, Founder & CEO of YourStory"><div class="fs-avatar"><img src="assets/Founder Photos/shradha-sharma-yourstory.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Shradha Sharma</span><small class="fs-card-co">YourStory</small><em class="fs-card-role">Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Saravana%20Kumar%20Kovai" target="_blank" rel="noopener" aria-label="Saravana Kumar, Founder & CEO of Kovai.co"><div class="fs-avatar"><img src="assets/Founder Photos/sarvana-kumar-kovai.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Saravana Kumar</span><small class="fs-card-co">Kovai.co</small><em class="fs-card-role">Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Sunil%20Patro%20SignEasy" target="_blank" rel="noopener" aria-label="Sunil Patro, Founder & CEO of SignEasy"><div class="fs-avatar"><img src="assets/Founder Photos/sunil-patro-signeasy.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Sunil Patro</span><small class="fs-card-co">SignEasy</small><em class="fs-card-role">Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Manoj%20Agarwal%20DevRev" target="_blank" rel="noopener" aria-label="Manoj Agarwal, Co-Founder of DevRev"><div class="fs-avatar"><img src="assets/Founder Photos/manoj-agarwal-devrev.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Manoj Agarwal</span><small class="fs-card-co">DevRev</small><em class="fs-card-role">Co-Founder</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Manasij%20Ganguli%20ZapScale" target="_blank" rel="noopener" aria-label="Manasij Ganguli, Co-Founder & CEO of ZapScale"><div class="fs-avatar"><img src="assets/Founder Photos/manasij-ganguli-zapscale.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Manasij Ganguli</span><small class="fs-card-co">ZapScale</small><em class="fs-card-role">Co-Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Louis%20Pereira%20AudioPen" target="_blank" rel="noopener" aria-label="Louis Pereira, Founder of AudioPen"><div class="fs-avatar"><img src="assets/Founder Photos/louis-peirera-audio-pen.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Louis Pereira</span><small class="fs-card-co">AudioPen</small><em class="fs-card-role">Founder</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Bhanu%20Teja%20SiteGPT" target="_blank" rel="noopener" aria-label="Bhanu Teja, Founder of SiteGPT"><div class="fs-avatar"><img src="assets/Founder Photos/bhanu-teja-sitegpt.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Bhanu Teja</span><small class="fs-card-co">SiteGPT</small><em class="fs-card-role">Founder</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Gaurav%20Sharma%20SaaS%20Labs" target="_blank" rel="noopener" aria-label="Gaurav Sharma, Founder & CEO of SaaS Labs"><div class="fs-avatar"><img src="assets/Founder Photos/gaurav-sharma-saaslabs.avif" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Gaurav Sharma</span><small class="fs-card-co">SaaS Labs</small><em class="fs-card-role">Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+
+      <!-- ---- Outer ring (9) ---- -->
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Siddharth%20Shah%20Dreamcast" target="_blank" rel="noopener" aria-label="Siddharth Shah, Founder & CEO of Dreamcast"><div class="fs-avatar"><img src="assets/Founder Photos/siddharth-shah-dreamcast.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Siddharth Shah</span><small class="fs-card-co">Dreamcast</small><em class="fs-card-role">Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Paramdeep%20Singh%20FieldAssist" target="_blank" rel="noopener" aria-label="Paramdeep Singh, Co-Founder & CEO of FieldAssist"><div class="fs-avatar"><img src="assets/Founder Photos/paramdeep-singh-field-assist.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Paramdeep Singh</span><small class="fs-card-co">FieldAssist</small><em class="fs-card-role">Co-Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Atoba%20Longkumer%20Tabernacle" target="_blank" rel="noopener" aria-label="Atoba Longkumer, Founder of Tabernacle"><div class="fs-avatar"><img src="assets/Founder Photos/atoba-longkumer-tabernacle.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Atoba Longkumer</span><small class="fs-card-co">Tabernacle</small><em class="fs-card-role">Founder</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Neeraj%20Singal%20TagBox" target="_blank" rel="noopener" aria-label="Neeraj Singal, Co-Founder of TagBox"><div class="fs-avatar"><img src="assets/Founder Photos/neeraj-singal-tagbox.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Neeraj Singal</span><small class="fs-card-co">TagBox</small><em class="fs-card-role">Co-Founder</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Nimish%20Singh%20Appointy" target="_blank" rel="noopener" aria-label="Nimish Singh, Founder & CEO of Appointy"><div class="fs-avatar"><img src="assets/Founder Photos/nimish-singh-appointy.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Nimish Singh</span><small class="fs-card-co">Appointy</small><em class="fs-card-role">Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Kalyan%20Varma%20Amantrae" target="_blank" rel="noopener" aria-label="Kalyan Varma, Founder of Amantrae"><div class="fs-avatar"><img src="assets/Founder Photos/kalyan-varma-amantrae.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Kalyan Varma</span><small class="fs-card-co">Amantrae</small><em class="fs-card-role">Founder</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Ayush%20Soni%20Recheck" target="_blank" rel="noopener" aria-label="Ayush Soni, Founder of Recheck"><div class="fs-avatar"><img src="assets/Founder Photos/ayush-soni-recheck.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Ayush Soni</span><small class="fs-card-co">Recheck</small><em class="fs-card-role">Founder &amp; CEO</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Pravat%20Panda%20Retrod" target="_blank" rel="noopener" aria-label="Pravat Panda, Founder of Retrod"><div class="fs-avatar"><img src="assets/Founder Photos/pravat-panda-retrod.png" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Pravat Panda</span><small class="fs-card-co">Retrod</small><em class="fs-card-role">Founder</em><span class="fs-card-arrow">View profile →</span></div></a>
+      <a class="fs-card" href="https://www.linkedin.com/search/results/people/?keywords=Vikash%20Kumar%20Prajapati%20BulkMockup" target="_blank" rel="noopener" aria-label="Vikash Kumar Prajapati, Founder of BulkMockup"><div class="fs-avatar"><img src="assets/Founder Photos/vikash-kumar-prajapati-bulkmockup.jpeg" alt=""/></div><div class="fs-card-text"><span class="fs-card-name">Vikash Prajapati</span><small class="fs-card-co">BulkMockup</small><em class="fs-card-role">Founder</em><span class="fs-card-arrow">View profile →</span></div></a>
+      </div><!-- /.fs-cards-scroll-wrap -->
+
+    </div>
+  </section>
+
+  <!-- ===== TEAM ===== -->
+  <section class="section team-section" id="team">
+    <h2 class="team-heading fade-in">The Team</h2>
+    <p class="team-sub fade-in">The curious minds behind every frame.</p>
+
+    <div class="team-avatars" role="list">
+      <div class="ta-item" tabindex="0" role="listitem" aria-label="Akshay Iyengar, Creative Generalist. Social media-first strategy and trend fluency. Sharp, current, and relevant storytelling for today's audiences.">
+        <div class="ta-ring"><div class="ta-photo"><img src="assets/teamPhoto/Akki.jpg" alt="" /></div></div>
+        <div class="ta-info"><span class="ta-name">Akshay Iyengar</span><span class="ta-role">Creative Generalist</span><span class="ta-bio">Social media-first strategy and trend fluency. Sharp, current, and relevant storytelling for today's audiences.</span></div>
+      </div>
+      <div class="ta-item" tabindex="0" role="listitem" aria-label="Ritesh Varma, Co-Founder and COO. 17 years of animation, an Empire Award, and a constant obsession with new tools. We stay technically razor-sharp without losing heart.">
+        <div class="ta-ring"><div class="ta-photo"><img src="assets/teamPhoto/Ritesh.jpeg" alt="" /></div></div>
+        <div class="ta-info"><span class="ta-name">Ritesh Varma</span><span class="ta-role">Co-Founder | COO</span><span class="ta-bio">17 years of animation, an Empire Award, and a constant obsession with new tools. We stay technically razor-sharp without losing heart.</span></div>
+      </div>
+      <div class="ta-item ta-center" tabindex="0" role="listitem" aria-label="Aniruddha Khanwilkar, Co-Founder and CEO. 10 years of screenwriting, 2 Bollywood films, and a sharp network. Every CMF film starts with a strong story spine, not just a brief.">
+        <div class="ta-ring"><div class="ta-photo"><img src="assets/teamPhoto/Ani.jpeg" alt="" /></div></div>
+        <div class="ta-info"><span class="ta-name">Aniruddha Khanwilkar</span><span class="ta-role">Co-Founder | CEO</span><span class="ta-bio">10 years of screenwriting, 2 Bollywood films, and a sharp network. Every CMF film starts with a strong story spine, not just a brief.</span></div>
+      </div>
+      <div class="ta-item" tabindex="0" role="listitem" aria-label="Akshay S, Creative Director. On-set production and direction experience plus OTT exposure (Amazon Prime). Fast, clean, production-ready execution under real deadlines.">
+        <div class="ta-ring"><div class="ta-photo"><img src="assets/teamPhoto/Akshay.JPG" alt="" /></div></div>
+        <div class="ta-info"><span class="ta-name">Akshay S</span><span class="ta-role">Creative Director</span><span class="ta-bio">On-set production and direction experience plus OTT exposure (Amazon Prime). Fast, clean, production-ready execution under real deadlines.</span></div>
+      </div>
+      <div class="ta-item" tabindex="0" role="listitem" aria-label="Neel Wannere, Lead Video Editor. Years of editing instinct and motion craft. Raw footage and rough ideas become cuts that feel inevitable, not assembled.">
+        <div class="ta-ring"><div class="ta-photo"><img src="assets/teamPhoto/Neel.jpg" alt="" /></div></div>
+        <div class="ta-info"><span class="ta-name">Neel Wannere</span><span class="ta-role">Lead Video Editor</span><span class="ta-bio">Years of editing instinct and motion craft. Raw footage and rough ideas become cuts that feel inevitable, not assembled.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA + CONTACT ===== -->
+  <section class="cta-contact-section" id="contact">
+    <div class="cta-contact-card">
+      <div class="cta-contact-inner">
+        <div class="cta-contact-grid">
+          <div class="cta-left">
+            <h2 class="cta-heading">We only bet on <span class="cta-accent">high-conviction</span> stories.</h2>
+            <p class="cta-desc">Long-form only. Documentaries, docu-series, founder films. We open 6 slots a year — and we're selective about every single one.</p>
+            <div class="wtu-slots" role="group" aria-labelledby="wtuSlotsLabel">
+              <div class="wtu-slots-number">4 slots left</div>
+              <span class="wtu-slots-label" id="wtuSlotsLabel">2026 Production Slate — 2 of 6 filled</span>
+              <div class="wtu-slots-row" role="img" aria-label="Slate progress: 2 filled, 4 remaining">
+                <span class="wtu-slot filled" aria-hidden="true"></span>
+                <span class="wtu-slot filled" aria-hidden="true"></span>
+                <span class="wtu-slot" aria-hidden="true"></span>
+                <span class="wtu-slot" aria-hidden="true"></span>
+                <span class="wtu-slot" aria-hidden="true"></span>
+                <span class="wtu-slot" aria-hidden="true"></span>
+              </div>
+            </div>
+            <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=connect@curiousmenfilms.com&amp;su=Story%20Pitch%20%E2%80%94%20Curious%20Men%20Films&amp;body=Hi%20CMF%20team%2C%0A%0AI%27d%20like%20to%20pitch%20a%20story.%0A%0AName%3A%20%0ACompany%2FRole%3A%20%0AThe%20story%20in%20one%20line%3A%20%0AWhy%20this%20story%2C%20why%20now%3A%20%0ATimeline%3A%20%0A%0AThanks%2C%0A" target="_blank" rel="noopener noreferrer" class="cta-btn" id="pitchBtn">Pitch your story</a>
+          </div>
+          <div class="cta-right">
+            <h3 class="cta-right-heading">Get in Touch</h3>
+            <div class="cta-contact-details">
+              <div class="contact-block">
+                <h4>Office</h4>
+                <p>Shifu Ventures, HSR Layout<br/>Bangalore, India</p>
+              </div>
+              <div class="contact-block">
+                <h4>Email</h4>
+                <p><a href="mailto:connect@curiousmenfilms.com">connect@curiousmenfilms.com</a></p>
+              </div>
+              <div class="contact-block">
+                <h4>Phone</h4>
+                <p><a href="tel:+919619033545">+91 96190 33545</a></p>
+              </div>
+              <div class="contact-block">
+                <h4>Follow Us</h4>
+                <p><a href="https://www.linkedin.com/company/curious-men-films-private-limited/?originalSubdomain=in" target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="https://www.instagram.com/curiousmenfilms/" target="_blank" rel="noopener">Instagram</a> &middot; <a href="https://www.youtube.com/@CuriousMenFilms" target="_blank" rel="noopener">YouTube</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">CMF</div>
+      <p>&copy; 2026 Curious Men Films. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="script.js?v=281"></script>
+</body>
+</html>

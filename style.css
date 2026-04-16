@@ -1,0 +1,4374 @@
+/* ===== CARD-STYLE SECTIONS ===== */
+.stack-card {
+  border-radius: 36px;
+  position: relative;
+  margin: 0 10px;
+}
+
+/* "What we do" — dark theme */
+.what-we-do.stack-card {
+  background: #111111;
+}
+
+/* "Founders" — slightly different shade */
+.founders-section.stack-card {
+  background: #f5f5f5;
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #ffffff;
+  --bg-light: #f8f8fa;
+  --bg-card: #f0f0f4;
+  --text: #1a1a2e;
+  --text-muted: #6b6b80;
+  --accent: #1a1a2e;
+  --accent-yellow: #fdd631;
+  --accent-purple: #4A20B0;
+  --accent-violet: #7B4FE0;
+  --accent-coral: #FF6B6B;
+  --dark-navy: #1a1a2e;
+  --border: #e2e2ea;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ============================================================
+     RESPONSIVE DESIGN TOKENS
+     ============================================================
+     Design baseline = 1440 × 900 (MacBook 14"). At that size every
+     token evaluates to the original hard-coded value. On larger
+     screens (up to 2560) the tokens scale up proportionally so the
+     composition reads the same on a 27"/TV. On smaller laptops
+     (down to 1200) they scale down gracefully. Mobile overrides
+     live in @media (max-width: 768px) blocks.
+
+     The formula is: clamp(min, preferred, max) where `preferred`
+     is expressed as a viewport-width-relative value so it tracks
+     the canvas. */
+
+  /* ----- Fluid type scale (baseline = 1440px) -----
+     Tuned so each token evaluates to the current desktop value at
+     a 1440px-wide viewport, then scales smoothly on either side. */
+  --step-0: clamp(0.85rem, 0.72rem + 0.28vw, 1.1rem);    /* body text */
+  --step-1: clamp(0.95rem, 0.78rem + 0.35vw, 1.25rem);   /* lead text */
+  --step-2: clamp(1.1rem, 0.85rem + 0.55vw, 1.6rem);     /* subheading */
+  --step-3: clamp(1.5rem, 1rem + 1.25vw, 2.6rem);        /* H3 */
+  --step-4: clamp(2rem, 1.25rem + 2vw, 3.6rem);          /* H2 */
+  --step-5: clamp(1.8rem, 0.6rem + 3.2vw, 4.8rem);       /* H1 / hero — scales gently */
+  --step-6: clamp(2.2rem, 0.8rem + 3.6vw, 6rem);         /* display */
+
+  /* ----- Fluid spacing scale ----- */
+  --space-2xs: clamp(0.25rem, 0.2rem + 0.15vw, 0.4rem);
+  --space-xs:  clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem);
+  --space-sm:  clamp(0.75rem, 0.6rem + 0.5vw, 1.15rem);
+  --space-md:  clamp(1rem, 0.8rem + 0.7vw, 1.6rem);
+  --space-lg:  clamp(1.5rem, 1.1rem + 1.1vw, 2.4rem);
+  --space-xl:  clamp(2rem, 1.4rem + 1.8vw, 3.6rem);
+  --space-2xl: clamp(3rem, 2rem + 2.8vw, 5.6rem);
+  --space-3xl: clamp(4rem, 2.6rem + 4vw, 7.5rem);
+  --space-4xl: clamp(5rem, 3rem + 5.5vw, 10rem);
+
+  /* ----- Container max-width ----- */
+  /* Caps the content column so a 4K TV doesn't stretch paragraphs to
+     unreadable widths — the backgrounds still fill edge-to-edge. */
+  --container-xl: min(94vw, 1680px);
+  --container-lg: min(92vw, 1320px);
+  --container-md: min(90vw, 1080px);
+
+  /* ----- Fluid card/image primitive sizes -----
+     These drive the journey timeline, team ring, founders scatter,
+     etc. Design baseline values are the current hard-coded pixels
+     at 1440px width, scaled up proportionally on bigger canvases.
+     Each clamp is tuned so the "preferred" term equals the baseline
+     value at exactly 14.4vw (= 1vw of 1440px). */
+  --size-tl-img:  clamp(240px, 8vw + 184px, 420px);    /* 300 @ 1440 */
+  --size-tl-col:  clamp(270px, 9vw + 210px, 480px);    /* 340 @ 1440 */
+  --size-tl-gap:  clamp(48px, 3.5vw + 30px, 120px);    /*  80 @ 1440 */
+  --size-ta-ring: clamp(240px, 7vw + 180px, 400px);    /* 281 @ 1440 */
+  --size-wmi-card-min-h: clamp(280px, 10vw + 196px, 480px); /* 340 @ 1440 */
+  --size-fs-card-w: clamp(168px, 6vw + 114px, 280px);  /* 200 @ 1440 */
+  --size-fs-card-h: clamp(52px, 2vw + 32px, 84px);     /*  60 @ 1440 */
+  --size-fs-avatar: clamp(40px, 1.7vw + 24px, 64px);   /*  48 @ 1440 */
+
+  /* ----- Radii ----- */
+  --radius-card: clamp(16px, 0.8vw + 8px, 28px);
+  --radius-shelf: clamp(28px, 2vw + 8px, 56px);
+
+  /* ----- Viewport shortcuts -----
+     svh/dvh keep mobile Safari from jumping when the URL bar shows.
+     We use dvh where content must fit the *current* visible area. */
+  --vh-full: 100dvh;
+  --svh-full: 100svh;
+}
+
+html {
+  font-size: 16px;
+  overflow-x: clip;
+}
+
+@supports not (height: 100dvh) {
+  :root {
+    --vh-full: 100vh;
+    --svh-full: 100vh;
+  }
+}
+
+/* ============================================================
+   LARGE-SCREEN SCALING — 1600 / 1920 / 2560+
+   ============================================================
+   The fluid clamp() tokens above already respond smoothly to
+   viewport width. These min-width breakpoints add an extra
+   push at specific thresholds so 27"/4K monitors read as
+   "designed for that size", not "scaled-up laptop". They also
+   raise the container max-width and base spacing so the page
+   doesn't feel lost on big canvases. */
+
+@media (min-width: 1600px) {
+  :root {
+    --container-xl: min(92vw, 1760px);
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    /* Bump the type scale by ~12% so the hero heading truly fills
+       the canvas on a 27" monitor instead of looking like a thumbnail. */
+    --step-5: clamp(3.2rem, 2rem + 3.6vw, 6.6rem);
+    --step-6: clamp(4rem, 2.6rem + 4.5vw, 8.6rem);
+    --size-tl-img: clamp(280px, 16vw + 60px, 440px);
+    --size-tl-col: clamp(320px, 18vw + 80px, 500px);
+    --size-ta-ring: clamp(280px, 18vw + 40px, 440px);
+    --size-wmi-card-min-h: clamp(320px, 22vw + 60px, 500px);
+    --container-xl: min(90vw, 1840px);
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    /* On a 4K TV, scale up more aggressively so the composition
+       keeps its intended density instead of sparse content in
+       oceans of empty space. */
+    --step-5: clamp(4rem, 2.2rem + 4vw, 9rem);
+    --step-6: clamp(5rem, 2.8rem + 5vw, 11rem);
+    --size-tl-img: clamp(340px, 18vw + 60px, 560px);
+    --size-tl-col: clamp(380px, 20vw + 80px, 620px);
+    --size-tl-gap: clamp(60px, 4vw + 20px, 140px);
+    --size-ta-ring: clamp(340px, 20vw + 40px, 560px);
+    --size-wmi-card-min-h: clamp(380px, 24vw + 60px, 620px);
+    --size-fs-card-w: clamp(220px, 13vw + 40px, 340px);
+    --size-fs-card-h: clamp(68px, 3.4vw + 20px, 96px);
+    --size-fs-avatar: clamp(56px, 3vw + 20px, 84px);
+    --container-xl: min(86vw, 2200px);
+  }
+}
+
+body {
+  background: #ffffff;
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* ============================================================
+   ACCESSIBILITY PRIMITIVES (WCAG 2.1 AA)
+   ============================================================ */
+
+/* ----- Skip-to-content link (WCAG 2.4.1) -----
+   Hidden off-screen by default, pops into view on keyboard focus. */
+.skip-to-content {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -110%);
+  z-index: 100000;
+  padding: 12px 22px;
+  background: var(--accent-purple);
+  color: #ffffff;
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+  text-decoration: none;
+}
+.skip-to-content:focus,
+.skip-to-content:focus-visible {
+  transform: translate(-50%, 0);
+  outline: 3px solid var(--accent-yellow);
+  outline-offset: 2px;
+}
+
+/* ----- Global :focus-visible outlines (WCAG 2.4.7) -----
+   Keyboard users get a clearly visible focus ring on every
+   interactive element. Mouse users don't see it thanks to
+   :focus-visible (modern browsers only show the ring for
+   keyboard-triggered focus). */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible,
+.fs-card:focus-visible,
+.ta-item:focus-visible {
+  outline: 3px solid var(--accent-purple);
+  outline-offset: 3px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 6px rgba(74, 32, 176, 0.22);
+}
+/* Dark-surface focus override — on dark cards the purple ring
+   loses contrast, so switch to a bright yellow ring. */
+.wmi-card:focus-visible,
+.hw-card:focus-visible,
+.cta-btn:focus-visible,
+.nav-btn:focus-visible {
+  outline: 3px solid var(--accent-yellow);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(253, 214, 49, 0.28);
+}
+
+/* ----- Reduced motion (WCAG 2.3.3) -----
+   Users with vestibular disorders / migraine triggers can opt out.
+   Kills all infinite-loop spinners, continuous gradients, hero
+   shimmers, and heavy scroll-driven transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Explicitly kill the spinning conic-gradient rings across the site */
+  .fs-card::before,
+  .wmi-card::before,
+  .tl-piece::before,
+  .hw-card::before,
+  .cta-contact-card,
+  .history-intro-our-journey {
+    animation: none !important;
+  }
+}
+
+/* ===== INTRO LOADER ===== */
+.sw-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+.sw-loader.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.loader-active {
+  overflow: hidden;
+}
+
+/* Animated color border — 4 edges */
+.sw-border-top,
+.sw-border-right,
+.sw-border-bottom,
+.sw-border-left {
+  position: fixed;
+  z-index: 10000;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.sw-borders-active .sw-border-top,
+.sw-borders-active .sw-border-right,
+.sw-borders-active .sw-border-bottom,
+.sw-borders-active .sw-border-left {
+  opacity: 1;
+}
+
+.sw-border-top {
+  top: 0; left: 0; right: 0;
+  height: 16px;
+  border-radius: 0 0 12px 12px;
+}
+
+.sw-border-bottom {
+  bottom: 0; left: 0; right: 0;
+  height: 16px;
+  border-radius: 12px 12px 0 0;
+}
+
+.sw-border-left {
+  top: 0; left: 0; bottom: 0;
+  width: 16px;
+  border-radius: 0 12px 12px 0;
+}
+
+.sw-border-right {
+  top: 0; right: 0; bottom: 0;
+  width: 16px;
+  border-radius: 12px 0 0 12px;
+}
+
+/* Color cycling gradient inside borders */
+.sw-border-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--accent-yellow), var(--accent-purple), var(--accent-violet), var(--accent-coral), var(--accent-yellow));
+  background-size: 300% 100%;
+  animation: borderColorCycle 2s linear infinite;
+}
+
+.sw-border-left .sw-border-fill,
+.sw-border-right .sw-border-fill {
+  background: linear-gradient(180deg, var(--accent-yellow), var(--accent-purple), var(--accent-violet), var(--accent-coral), var(--accent-yellow));
+  background-size: 100% 300%;
+  animation: borderColorCycleV 2s linear infinite;
+}
+
+@keyframes borderColorCycle {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+@keyframes borderColorCycleV {
+  0% { background-position: 50% 0%; }
+  100% { background-position: 50% 300%; }
+}
+
+/* Loader center content */
+.sw-loader-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0 48px;
+}
+
+/* Text block container */
+.sw-text-block {
+  text-align: center;
+  max-width: 800px;
+}
+
+/* Line mask — overflow hidden clips the slide-up.
+   padding-bottom + negative margin-bottom gives descenders (y, g, p) room
+   to render inside the mask without affecting outer layout. */
+.sw-line-mask {
+  overflow: hidden;
+  line-height: 1.25;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+}
+
+/* Each line of text — starts pushed below mask */
+.sw-line {
+  display: block;
+  font-family: var(--font);
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 900;
+  color: #1a1a2e;
+  letter-spacing: -2px;
+  transform: translateY(110%);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sw-line.show {
+  transform: translateY(0);
+}
+
+.sw-line.hide {
+  transform: translateY(-110%);
+  transition: transform 0.6s cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+/* Gradient lines — "Curious Man" and "Films." */
+.sw-line-gradient {
+  background: linear-gradient(90deg, #1a1a2e, var(--accent-purple), var(--accent-yellow), var(--accent-violet), var(--accent-coral), #1a1a2e);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 48px;
+  background: transparent;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
+}
+
+.navbar.nav-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo-img {
+  height: 40px;
+  width: auto;
+  border-radius: 8px;
+}
+
+.nav-hamburger { display: none; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-link {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--accent-coral);
+}
+
+.nav-btn {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #111;
+  background: var(--accent-yellow);
+  padding: 10px 22px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.nav-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(247, 201, 72, 0.4);
+  background: #f5c230;
+}
+
+@media (max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .nav-inner { height: 56px; }
+  .nav-links { gap: 16px; }
+  .nav-link { font-size: 0.82rem; }
+  .nav-btn { font-size: 0.82rem; padding: 10px 18px; }
+}
+
+/* ===== HERO ===== */
+/* ===== Hero BG Layers (glow + grid + noise) ===== */
+.hero-bg-layers {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-bg-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 640px at 50% 45%, rgba(74, 32, 176, 0.06), transparent 70%),
+              radial-gradient(circle 400px at 30% 60%, rgba(255, 107, 107, 0.05), transparent 60%),
+              radial-gradient(circle 500px at 70% 30%, rgba(253, 214, 49, 0.06), transparent 60%);
+}
+
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+  background-size: 24px 28px;
+  -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, black 50%, transparent 100%);
+  mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, black 50%, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.hero-bg-noise {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+/* ===== BG Pattern ===== */
+.bg-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.bg-dots {
+  background-image: radial-gradient(rgba(0,0,0,0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-diagonal {
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.06), rgba(0,0,0,0.06) 1px, transparent 1px, transparent 24px);
+}
+
+/* Mask variants */
+.bg-fade-edges {
+  -webkit-mask-image: radial-gradient(ellipse at center, transparent 0%, black 70%);
+  mask-image: radial-gradient(ellipse at center, transparent 0%, black 70%);
+}
+
+.bg-fade-center {
+  -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+}
+
+.bg-fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.bg-fade-y {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black, transparent);
+}
+
+.hero {
+  height: var(--vh-full);
+  min-height: 640px;
+  position: sticky;
+  top: 0;
+  z-index: 5; /* sits ABOVE the wmi-section so it can "lift up" off it */
+  background: #ffffff;
+  /* Rounded bottom + soft drop-shadow makes hero feel like a card floating
+     over the dark wmi-section underneath. Scroll-driven JS then lifts it up. */
+  border-radius: 0 0 48px 48px;
+  box-shadow:
+    0 50px 100px -30px rgba(0, 0, 0, 0.45),
+    0 20px 40px -20px rgba(74, 32, 176, 0.25);
+  will-change: transform;
+}
+
+.hero-text-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 100px 5% 40px;
+  min-height: 70vh;
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+}
+
+/* Hero video wrap — hidden (replaced by studio image in journey section) */
+.hero-video-wrap {
+  display: none;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* "Our Journey" overlay that appears on top of the hero video when fully expanded */
+.hero-journey-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.hero-journey-logo {
+  max-width: 320px;
+  width: 40%;
+  height: auto;
+}
+
+/* What We Do stacks on top of hero */
+.what-we-do.stack-card {
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+}
+
+/* Mouse spark canvas */
+.hero-spark-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-logo {
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-heading, .hero-sub, .scroll-indicator {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-logo-img {
+  /* Scales smoothly across laptop → 4K TV. Baseline ~320px at 1440w,
+     up to ~560px on a 3840 display so the mark doesn't look lost. */
+  width: clamp(220px, 20vw + 32px, 560px);
+  height: auto;
+  display: block;
+}
+
+.hero-heading {
+  font-size: var(--step-5);
+  font-weight: 900;
+  line-height: 1.1;
+  max-width: min(85vw, 1100px);
+  letter-spacing: -1px;
+  color: var(--accent);
+  margin-bottom: var(--space-lg);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
+
+/* Slide-up masked text animation (same as loader) */
+.hero-line-mask {
+  overflow: hidden;
+  line-height: 1.25;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+}
+
+.hero-line {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-line.show {
+  transform: translateY(0);
+}
+
+.text-yellow {
+  color: var(--accent-yellow);
+}
+
+.text-purple {
+  color: var(--accent-purple);
+}
+
+/* Animated gradient on hero keyword */
+.hero-gradient-word {
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-yellow), var(--accent-violet), var(--accent-coral), var(--accent-purple));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-highlight {
+  background: linear-gradient(to top, rgba(247, 201, 72, 0.28) 0%, rgba(247, 201, 72, 0.28) 34%, transparent 34%);
+  padding: 0 4px;
+}
+
+/* Accent flourish removed */
+.hero-heading::after {
+  display: none;
+}
+
+.hero-sub {
+  font-size: var(--step-1);
+  color: var(--text-muted);
+  max-width: min(78vw, 780px);
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.7s ease 0.1s;
+}
+
+.hero-sub.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  display: none;
+}
+
+.scroll-dot {
+  width: 3px;
+  height: 60px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--accent-yellow) 0px,
+    var(--accent-yellow) 3px,
+    transparent 3px,
+    transparent 8px
+  );
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ===== HEADING HOVER LINE REVEAL ===== */
+.heading-hover {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+
+.heading-hover::before,
+.heading-hover::after {
+  display: none;
+}
+
+/* ===== SECTIONS COMMON ===== */
+.section {
+  padding: 120px 24px;
+}
+
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-heading {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--accent);
+}
+
+.section-paragraph {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 60px;
+  line-height: 1.8;
+}
+
+/* Left-aligned headings */
+.section-heading-left {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  text-align: left;
+  margin-bottom: 12px;
+  color: var(--accent-purple);
+}
+
+.section-paragraph-left {
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-align: left;
+  max-width: 600px;
+  margin: 0 0 50px;
+  line-height: 1.8;
+}
+
+/* ===== FADE-IN (disabled) ===== */
+.fade-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ===== WHAT WE DO — CARDS (Dark Theme) ===== */
+.what-we-do {
+  background: #111111;
+  color: #ffffff;
+}
+
+.what-we-do .section-heading-left {
+  color: var(--accent-yellow);
+}
+
+.what-we-do .section-paragraph-left {
+  color: #999999;
+}
+
+.what-we-do .card {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+.what-we-do .card:hover {
+  border-color: #444;
+}
+
+.what-we-do .card h3 {
+  color: #ffffff;
+}
+
+.what-we-do .card p {
+  color: #999999;
+}
+
+.what-we-do .card-icon {
+  color: #999999;
+}
+
+.cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: #ccc;
+}
+
+.card-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 24px;
+  color: var(--text-muted);
+}
+
+.card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--accent);
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ===== WE MAKE IT / WE TAKE IT =====
+   Architecture:
+   .wmi-pin-wrap (400vh tall, margin-top: -100vh → sits under hero)
+     .wmi-section (position:sticky top:0 height:100vh → pinned for 300vh of scroll)
+       .wmi-video-card     — BTS video (edge-to-edge)
+       .wmi-text-block     — headline + subtext below the video
+       .wmi-cards          — Production + Distribution cards (hidden initially)
+
+   Scroll phases (measured from hero top as scroll 0):
+     0    → 100vh  : Hero card lifts up via JS translate. wmi pinned behind
+                      it — stationary, being progressively revealed.
+     100vh→ 160vh  : Hero gone. Text reveal animation plays once.
+     160vh→ 280vh  : Video scrolls up / fades. Text shrinks and rises to the
+                      video's old position. Two cards fade in and split L/R,
+                      revealing Production (left) and Distribution (right).
+     280vh→ 400vh  : wmi unpins and scrolls up, handing off to the next
+                      section. */
+.wmi-pin-wrap {
+  position: relative;
+  z-index: 1;                 /* behind hero (z:5) */
+  margin-top: -100vh;  /* align wmi's top with hero's top */
+  /* 440vh tall = 340vh of sticky pin range. Tuned so that the exit
+     animation ends exactly at the pin release — no wasted scroll. */
+  height: 440vh;
+}
+
+.wmi-section {
+  position: sticky;
+  top: 0;
+  height: var(--vh-full);
+  min-height: 640px;
+  width: 100%;
+  background: #000000;          /* full black — no brand tint, no gradients */
+  color: #ffffff;
+  /* Flat, full-bleed section — NO rounded corners, NO shadows, NO frames */
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Anchor the video near the TOP of the viewport with a small breathing
+     gap, then let the caption center itself in the remaining space below. */
+  justify-content: flex-start;
+  gap: 0;
+  padding: 8vh 0 8vh;
+  box-sizing: border-box;
+}
+
+.wmi-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Video frame — edge-to-edge full width, exactly 1/3 of the viewport height.
+   No decorative frame, no padding, no border-radius. Just the video.
+   Driven by --wmi-video-y / --wmi-video-opacity CSS vars during the
+   exit phase (video lifts up and fades away). */
+.wmi-video-card {
+  position: relative;
+  width: 100vw;
+  height: 33.333vh;             /* exactly one third of the screen */
+  padding: 0;
+  border-radius: 0;
+  background: #000;
+  box-shadow: none;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  transform: translateY(var(--wmi-video-y, 0));
+  opacity: var(--wmi-video-opacity, 1);
+  will-change: transform, opacity;
+}
+
+.wmi-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;            /* autoplays and fills the 1/3 frame completely */
+  /* Show the LOWER portion of the source frame — this reveals the person
+     on the sofa + the setup instead of the ceiling/lights. */
+  object-position: center 70%;
+  display: block;
+  border-radius: 0;
+  background: #000;
+}
+
+/* Caption block — centered in the space BELOW the video.
+   margin-top/bottom: auto pushes it to the middle of the remaining flex room.
+   Driven by --wmi-text-y / --wmi-text-scale during the exit phase: the
+   text shrinks slightly and rises to sit where the video used to be. */
+.wmi-text-block {
+  max-width: 1100px;
+  padding: 0 5%;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  transform: translateY(var(--wmi-text-y, 0)) scale(var(--wmi-text-scale, 1));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.wmi-heading {
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin: 0 0 18px;
+}
+
+/* Mask wrapper — overflow hidden clips the slide-up animation.
+   Matches the hero loader (.sw-line-mask) pattern for brand consistency. */
+.wmi-line-mask {
+  overflow: hidden;
+  line-height: 1.2;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.05em;
+}
+
+/* Each heading line — starts pushed below the mask, slides up when
+   .wmi-show is added. Text is painted directly in the brand gradient
+   (no white → gradient cross-fade). */
+.wmi-line {
+  display: block;
+  transform: translateY(110%);
+  /* Faster reveal — was 0.9s which felt sluggish; 0.6s is snappier
+     while still reading as a deliberate slide-up, not a snap. */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(
+    90deg,
+    var(--accent-purple),
+    var(--accent-violet),
+    var(--accent-yellow),
+    var(--accent-coral),
+    var(--accent-purple)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  padding-bottom: 0.15em;
+  will-change: transform;
+  animation: ow-gradient-shift 5s ease infinite;
+}
+
+.wmi-line.wmi-show {
+  transform: translateY(0);
+}
+
+/* Ampersand line — same family/weight as the rest of the heading.
+   (NOT italic — explicit ask: "the and is italic, which shouldn't be".) */
+.wmi-line.wmi-amp {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 1em;
+  letter-spacing: -1px;
+  padding: 0 0 0.08em;
+}
+
+.wmi-sub {
+  font-size: clamp(0.88rem, 1.3vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  margin: 18px 0 0;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wmi-sub.wmi-sub-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Production + Distribution cards (exit phase) =====
+   Both cards start stacked at the horizontal center of the section,
+   hidden behind the video area. Scroll-driven JS fades them in and
+   translates them horizontally outward: prod → left, dist → right. */
+.wmi-cards {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Card = solid black card with an animated spinning conic-gradient
+   border ring (matching the .tl-piece.tl-active pattern used elsewhere
+   in the site for brand consistency). */
+@property --wmi-card-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes wmiCardBorderSpin {
+  to { --wmi-card-angle: 360deg; }
+}
+
+.wmi-card {
+  position: absolute;
+  /* Sit lower in the viewport so the heading (lifted upward during the
+     exit phase) has clean breathing room above. */
+  top: 62%;
+  left: 50%;
+  /* Full transform is composed from CSS variables so JS can drive the
+     split translateX while CSS layers the hover scale on top without
+     fighting inline styles. Default is 60vw outward so cards start
+     completely off-screen — no visual stack against the heading. */
+  --wmi-card-x: 0vw;
+  --wmi-card-scale: 1;
+  transform:
+    translate(-50%, -50%)
+    translateX(var(--wmi-card-x))
+    scale(var(--wmi-card-scale));
+  /* Fluid equal dimensions — both cards are the same size regardless
+     of how long their body copy is. Scale with viewport so the cards
+     stay visually balanced against the big heading on every display.
+     Width grows slightly faster than height on big displays so the
+     cards don't look "too tall" at 2560+/4K. */
+  width: clamp(320px, 22vw + 90px, 680px);
+  height: var(--size-wmi-card-min-h);
+  padding: clamp(22px, 1.8vw + 4px, 36px) clamp(24px, 2vw + 4px, 40px) clamp(24px, 2vw + 4px, 40px);
+  background: #0a0a0a;
+  border-radius: 22px;
+  opacity: 0;
+  will-change: transform, opacity;
+  box-sizing: border-box;
+  isolation: isolate;
+  /* Color hooks for hover (also animated via transition). Default inner
+     fill is dark, text is light. Hover flips both. */
+  --wmi-card-bg: #0a0a0a;
+  --wmi-card-title: #ffffff;
+  --wmi-card-text: rgba(255, 255, 255, 0.72);
+  transition:
+    transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+    --wmi-card-bg 0.1s ease,
+    --wmi-card-title 0.1s ease,
+    --wmi-card-text 0.1s ease;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* On hover: card grows (scale 1.08), inner fill flips to white, text
+   flips to black. The spinning conic-gradient border ring stays on
+   (still looks great around the white surface). */
+.wmi-card:hover {
+  --wmi-card-scale: 1.08;
+  --wmi-card-bg: #ffffff;
+  --wmi-card-title: #0a0a0a;
+  --wmi-card-text: rgba(10, 10, 10, 0.72);
+  z-index: 5;
+}
+
+@property --wmi-card-x {
+  syntax: "<length-percentage>";
+  initial-value: 0vw;
+  inherits: false;
+}
+
+@property --wmi-card-scale {
+  syntax: "<number>";
+  initial-value: 1;
+  inherits: false;
+}
+
+/* Spinning conic-gradient ring */
+.wmi-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 24px;
+  background: conic-gradient(
+    from var(--wmi-card-angle, 0deg),
+    var(--accent-purple),
+    var(--accent-violet),
+    var(--accent-yellow),
+    var(--accent-coral),
+    var(--accent-purple)
+  );
+  animation: wmiCardBorderSpin 4s linear infinite;
+  z-index: -2;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    0 0 40px rgba(123, 79, 224, 0.22);
+}
+
+/* Inner fill — sits just inside the spinning ring. Color is a custom
+   property so the hover state flicks it between #0a0a0a and #ffffff. */
+.wmi-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: var(--wmi-card-bg);
+  transition: background 0.1s ease;
+  z-index: -1;
+}
+
+@property --wmi-card-bg {
+  syntax: "<color>";
+  initial-value: #0a0a0a;
+  inherits: true;
+}
+
+@property --wmi-card-title {
+  syntax: "<color>";
+  initial-value: #ffffff;
+  inherits: true;
+}
+
+@property --wmi-card-text {
+  syntax: "<color>";
+  initial-value: rgba(255, 255, 255, 0.72);
+  inherits: true;
+}
+
+.wmi-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.wmi-card-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-violet));
+  box-shadow: 0 8px 22px rgba(124, 58, 237, 0.45);
+  flex-shrink: 0;
+}
+
+.wmi-card-title {
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  font-weight: 900;
+  letter-spacing: -0.3px;
+  margin: 0;
+  color: var(--wmi-card-title);
+  transition: color 0.1s ease;
+}
+
+.wmi-card-body p {
+  font-size: clamp(0.88rem, 1vw, 0.98rem);
+  line-height: 1.65;
+  color: var(--wmi-card-text);
+  margin: 0 0 12px;
+  transition: color 0.1s ease;
+}
+
+.wmi-card-body p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .wmi-pin-wrap { height: 420vh; }
+  .wmi-section {
+    gap: 32px;
+  }
+  .wmi-video-card {
+    width: 100vw;
+    height: 33.333vh;
+  }
+  .wmi-heading {
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .wmi-card {
+    width: min(86vw, 360px);
+    padding: 22px 22px 24px;
+  }
+}
+
+/* ===== HISTORY SECTION — single sticky viewport ===== */
+/* ===== WHAT WE DO ===== */
+.what-we-do-section {
+  position: relative;
+  z-index: 2;
+  height: 350vh; /* scroll space for: prod focus + dist focus + scroll away */
+  background: #000000;
+  color: #ffffff;
+  border-radius: 36px 36px 0 0;
+  overflow: hidden;
+  box-shadow: 0 -10px 60px rgba(0,0,0,0.5);
+  display: none;
+}
+
+.wwd-sticky {
+  position: sticky;
+  top: 0;
+  height: var(--vh-full);
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 48px;
+  overflow: hidden;
+}
+
+.wwd-top {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.wwd-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-yellow);
+  margin-bottom: 16px;
+}
+
+.wwd-heading {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -1px;
+}
+
+.wwd-accent {
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-yellow), var(--accent-violet), var(--accent-coral), var(--accent-purple));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ow-gradient-shift 4s ease infinite;
+}
+
+/* Pill container */
+.wwd-pill {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  max-width: 1100px;
+  height: 340px;
+}
+
+/* Each column */
+.wwd-col {
+  position: relative;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 40px 36px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.5s ease,
+              border-color 0.4s ease;
+  will-change: flex;
+}
+
+/* Pill shape: rounded on outer edges */
+.wwd-col[data-side="left"] {
+  border-radius: 200px 24px 24px 200px;
+}
+.wwd-col[data-side="right"] {
+  border-radius: 24px 200px 200px 24px;
+}
+
+/* Hover effect */
+.wwd-col:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Column header (icon + title) */
+.wwd-col-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+}
+
+.wwd-col-icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+
+.wwd-col-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+/* Body text — hidden by default */
+.wwd-col-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-top: 0;
+  transition: max-height 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.5s ease 0.1s,
+              margin-top 0.5s ease;
+}
+
+.wwd-col-body p {
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.wwd-col-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Active column: expanded ---- */
+.wwd-col.is-active {
+  flex: 2.5;
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.wwd-col.is-active .wwd-col-body {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 20px;
+}
+
+.wwd-col.is-active .wwd-col-title {
+  background: linear-gradient(90deg, var(--accent-yellow), var(--accent-purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glowing border on active */
+.wwd-col.is-active::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    #4A20B0, #7B4FE0, #fdd631, #FF6B6B, #7B4FE0, #4A20B0
+  );
+  z-index: -1;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+}
+
+/* Soft glow */
+.wwd-col.is-active::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    #4A20B0, #7B4FE0, #fdd631, #FF6B6B, #7B4FE0, #4A20B0
+  );
+  z-index: -2;
+  opacity: 0.4;
+  filter: blur(20px);
+  transition: opacity 0.5s ease;
+}
+
+/* ---- Inactive column: compressed ---- */
+.wwd-col.is-inactive {
+  flex: 0.6;
+  opacity: 0.5;
+}
+
+.wwd-col.is-inactive .wwd-col-body {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .wwd-pill {
+    flex-direction: column;
+    height: auto;
+  }
+  .wwd-col[data-side="left"] {
+    border-radius: 80px 80px 24px 24px;
+  }
+  .wwd-col[data-side="right"] {
+    border-radius: 24px 24px 80px 80px;
+  }
+  .wwd-col {
+    min-height: 80px;
+  }
+  .wwd-heading {
+    font-size: 1.8rem;
+  }
+}
+
+/* ===== HISTORY / OUR JOURNEY ===== */
+.history-master {
+  position: relative;
+  background: #ffffff;
+  /* height set by JS: horizontal scroll */
+  z-index: 2;
+}
+
+.history-master-sticky {
+  position: sticky;
+  top: 0;
+  height: var(--vh-full);
+  min-height: 640px;
+  overflow: hidden;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Soft yellow glow + dot noise texture on Our Journey */
+.history-master-sticky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at center, #FFF991 0%, transparent 70%);
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.history-master-sticky::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: transparent;
+  background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.35) 1px, transparent 0);
+  background-size: 20px 20px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+
+/* -- Layer 1: Studio video (zooms into white monitor screen) -- */
+.history-intro-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  will-change: transform, opacity;
+  transform-origin: 50% 42%; /* zoom toward the monitor white screen center */
+  overflow: hidden;
+  background: #000;
+}
+
+.history-intro-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.history-intro-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* "Our Journey" SVG overlay sitting on the monitor's white screen.
+   The SVG file has a square viewBox (375×375) but the actual artwork
+   only occupies the TOP ~54% of that viewBox — the bottom half is
+   transparent padding baked into the file. To make it read as
+   centered, we give the wrapper an aspect-ratio matching the artwork
+   region (360 × 203) and let the <img> use object-fit: cover with
+   object-position: top so the empty padding gets cropped out cleanly.
+   The wrapper sits at the visual center of the white monitor screen
+   in the studio video. It scales WITH the parent .history-intro-layer
+   (no inverse scale) and JS fades it out as the zoom progresses. */
+.history-intro-screen-text {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  /* Inverse-scale via --intro-zoom (set by JS) so the artwork stays at
+     a constant visual size regardless of how far the parent layer
+     scales. This is the only way to prevent the SVG from growing huge
+     and cropping against the monitor screen edges during the zoom. */
+  transform: translate(-50%, -50%) scale(calc(1 / var(--intro-zoom, 1)));
+  transform-origin: center center;
+  z-index: 3;
+  pointer-events: none;
+  width: min(22vw, 240px);
+  aspect-ratio: 360 / 203;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+  /* JS sets --intro-svg-opacity (1 → 0) as the parent layer zooms in. */
+  opacity: var(--intro-svg-opacity, 1);
+}
+
+.history-intro-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* The SVG's artwork sits in the top region of its square viewBox.
+     `cover` + `object-position: center top` makes the visible artwork
+     fill the wrapper, with the empty bottom padding cropped off. */
+  object-fit: cover;
+  object-position: center top;
+  filter: drop-shadow(0 2px 18px rgba(123, 79, 224, 0.25));
+}
+
+/* Image overlaid on the white monitor screen — zooms WITH the video */
+.intro-screen-text {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  text-align: center;
+  pointer-events: none;
+}
+
+.intro-screen-img {
+  display: block;
+  width: clamp(220px, 30vw, 480px);
+  height: auto;
+}
+
+.intro-screen-logo {
+  max-width: clamp(160px, 22vw, 320px);
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.6));
+}
+
+/* -- India map background -- */
+.india-map-layer {
+  position: absolute;
+  right: -5%;
+  top: 5%;
+  width: 45%;
+  height: 90%;
+  z-index: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.india-map-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* -- Layer 2: Horizontal scroll (overlaid, fades in then scrolls) -- */
+.history-hscroll-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  opacity: 0;
+  will-change: opacity;
+  background: transparent;
+}
+
+/* Journey background layers — paper texture */
+.journey-bg-layers {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Removed warm gradient overlay — clean white background */
+.journey-bg-glow {
+  display: none;
+}
+
+.journey-bg-grid {
+  display: none;
+}
+
+
+/* Paper noise grain overlay */
+.journey-noise {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: multiply;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.history-hscroll-track {
+  position: relative;
+  padding: 180px 80px 0; /* top padding for title + breathing room */
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  will-change: transform;
+  width: max-content;
+}
+
+/* ---- Timeline curved thread (SVG) ---- */
+.tl-thread-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.tl-thread-path-bg {
+  stroke: rgba(74, 32, 176, 0.1);
+  stroke-width: 2;
+  stroke-dasharray: 8 10;
+  stroke-linecap: round;
+}
+
+.tl-thread-path-fill {
+  stroke: url(#tlGradient);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px rgba(74, 32, 176, 0.2));
+}
+
+/* Big title — stays fixed on screen while track scrolls, aligned with paragraph */
+.tl-title {
+  position: absolute;
+  top: 50px;
+  left: 80px;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-yellow), var(--accent-violet), var(--accent-coral), var(--accent-purple));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ow-gradient-shift 4s ease infinite;
+  line-height: 1.25;
+  padding-bottom: 0.15em;
+  letter-spacing: -2px;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+/* Skip button — hidden on desktop */
+.tl-skip-btn { display: none; }
+
+/* Column wrapper */
+.tl-col {
+  flex: 0 0 var(--size-tl-col);
+  position: relative;
+  z-index: 1;
+  margin-right: var(--size-tl-gap);
+}
+
+
+/* ---- Intro text block ---- */
+.tl-intro-block {
+  padding-top: 40px;
+  max-width: 300px;
+}
+
+.tl-intro-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+/* ---- Each timeline piece (image + year + text, all rotated together) ---- */
+.tl-piece {
+  max-width: var(--size-tl-img);
+  transform: scale(0.95) rotate(var(--r, 0deg)) translateZ(0);
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  filter: saturate(0) brightness(1.1);
+  isolation: isolate;
+  will-change: transform, filter;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tl-piece.tl-active {
+  transform: scale(1) rotate(var(--r, 0deg)) translateZ(0);
+  filter: saturate(1) brightness(1);
+}
+
+/* ===== Active state: black card with spinning gradient border ===== */
+@property --tl-card-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes tlCardBorderSpin {
+  to { --tl-card-angle: 360deg; }
+}
+
+/* The outer spinning conic-gradient ring — always rendered, fades in via opacity
+   so the active/inactive swap crossfades smoothly instead of popping. The
+   animation is paused on inactive cards so we aren't repainting 7 spinning
+   conic gradients continuously — big win on scroll smoothness. */
+.tl-piece::before {
+  content: '';
+  position: absolute;
+  inset: -22px;
+  border-radius: 28px;
+  background: conic-gradient(
+    from var(--tl-card-angle, 0deg),
+    var(--accent-purple),
+    var(--accent-violet),
+    var(--accent-yellow),
+    var(--accent-coral),
+    var(--accent-purple)
+  );
+  animation: tlCardBorderSpin 4s linear infinite;
+  animation-play-state: paused;
+  z-index: -2;
+  box-shadow: 0 20px 60px rgba(74, 32, 176, 0.25), 0 0 40px rgba(123, 79, 224, 0.18);
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+
+.tl-piece.tl-active::before {
+  animation-play-state: running;
+}
+
+/* The inner black fill — also always rendered, crossfades with the ring */
+.tl-piece::after {
+  content: '';
+  position: absolute;
+  inset: -18px;
+  border-radius: 24px;
+  background: #0a0a0a;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+
+.tl-piece.tl-active::before,
+.tl-piece.tl-active::after {
+  opacity: 1;
+}
+
+/* Ensure children render above the pseudo-element backgrounds */
+.tl-piece.tl-active > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Image sits flat inside the black card */
+.tl-piece.tl-active .tl-img {
+  background: #0a0a0a;
+  box-shadow: none;
+}
+
+/* Kill the old hover radial-glow::before + inner glow on active cards */
+.tl-piece.tl-active .tl-img::before,
+.tl-piece.tl-active .tl-img::after {
+  opacity: 0 !important;
+}
+
+/* Year badge keeps its brand colors (yellow + purple) on the black card */
+.tl-piece.tl-active .tl-year {
+  color: var(--accent-purple);
+  background: #fdd631;
+}
+
+/* White paragraph text on the black active card */
+.tl-piece.tl-active p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.tl-piece.tl-active:hover p {
+  color: #ffffff;
+}
+
+.tl-piece:hover,
+.tl-piece.tl-active:hover {
+  transform: scale(1.04) rotate(var(--r, 0deg));
+  z-index: 2;
+}
+
+.tl-piece:hover .tl-year {
+  font-size: 1.5rem;
+}
+
+.tl-piece:hover p {
+  color: #333;
+}
+
+/* ---- Image: fluid square card ~ 300px at 1440px baseline ---- */
+.tl-img {
+  width: var(--size-tl-img);
+  height: var(--size-tl-img);
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  overflow: visible;
+  margin-bottom: 14px;
+  position: relative;
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* Glow behind card on hover — mouse-tracking */
+.tl-img::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  background: radial-gradient(
+    circle 180px at var(--glow-x, 50%) var(--glow-y, 50%),
+    var(--accent-coral) 0%,
+    rgba(255, 107, 107, 0.4) 25%,
+    rgba(74, 32, 176, 0.3) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.35s ease;
+}
+
+.tl-piece:hover .tl-img::before {
+  opacity: 1;
+}
+
+/* Inner glow border effect */
+.tl-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  border: 1.5px solid transparent;
+  background: radial-gradient(
+    circle 150px at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(255, 107, 107, 0.5),
+    rgba(74, 32, 176, 0.2) 40%,
+    transparent 70%
+  ) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.tl-piece:hover .tl-img::after {
+  opacity: 1;
+}
+
+.tl-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.tl-img span {
+  color: #333;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Subtle floating/pulsing animation */
+.tl-float {
+  animation: tlFloat 4s ease-in-out infinite;
+}
+
+.tl-piece:hover .tl-float {
+  animation-play-state: paused;
+}
+
+@keyframes tlFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ---- Year ---- */
+.tl-year {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--accent-purple);
+  background: #fdd631;
+  padding: 4px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-family: var(--font);
+  font-style: normal;
+  letter-spacing: -0.5px;
+  transition: color 0.7s ease, background 0.7s ease, font-size 0.35s ease;
+  align-self: flex-start;
+}
+
+/* ---- Caption ---- */
+.tl-piece p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 300px;
+  transition: color 0.7s ease, font-size 0.35s ease;
+  align-self: flex-start;
+  text-align: left;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .history-big-title {
+    font-size: clamp(2.5rem, 10vw, 5rem);
+  }
+
+  .tl-col { flex: 0 0 260px; margin-right: 50px; }
+  .tl-img { width: 230px; height: 230px; }
+  .tl-title { font-size: 1.6rem; }
+  .history-hscroll-track { padding: 0 24px; }
+}
+
+/* ===== OUR WORK / TRAILER (Dark, stacks on journey) ===== */
+.our-work {
+  background: #ffffff;
+  color: var(--text);
+  position: relative;
+  /* Sits ABOVE .founders-scatter so the rounded bottom corners cut into
+     the dark section below — the white Our Work tile "lifts up" off the
+     navy background instead of the navy curving into the white. */
+  z-index: 5;
+  border-radius: 36px 36px 36px 36px;
+  box-shadow:
+    0 -20px 60px rgba(0, 0, 0, 0.08),
+    0 24px 60px rgba(0, 0, 0, 0.12);
+  margin-top: -100vh;
+  padding-top: 50px;
+  padding-bottom: 60px;
+}
+
+/* Our Work — inner layout */
+.ow-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ow-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-coral);
+  margin-bottom: 16px;
+}
+
+.ow-heading {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.ow-heading-accent {
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-yellow), var(--accent-violet), var(--accent-coral), var(--accent-purple));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ow-gradient-shift 4s ease infinite;
+}
+
+@keyframes ow-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.ow-sub {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 620px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+/* Featured video player */
+.ow-featured-video {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.ow-video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.ow-featured-video:hover .ow-video-thumb {
+  transform: scale(1.02);
+  filter: brightness(0.85);
+}
+
+.ow-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 2;
+  padding: 0;
+}
+
+.ow-video-play svg {
+  width: 80px;
+  height: 56px;
+  filter: drop-shadow(0 4px 20px rgba(0,0,0,0.4));
+  transition: transform 0.3s ease;
+}
+
+.ow-featured-video:hover .ow-video-play svg {
+  transform: scale(1.1);
+}
+
+/* When video is playing (iframe loaded) */
+.ow-featured-video.ow-video-playing .ow-video-play,
+.ow-featured-video.ow-video-playing .ow-video-thumb {
+  display: none;
+}
+
+.ow-featured-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 20px;
+}
+
+/* Bento grid: large left + two stacked right */
+/* === Hover Product Cards === */
+.ow-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@property --hw-card-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes hwCardBorderSpin {
+  to { --hw-card-angle: 360deg; }
+}
+
+.hw-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 3 / 4;
+  background: #2a2a3e;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hw-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Always-on spinning gradient border */
+.hw-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 3px;
+  background: conic-gradient(
+    from var(--hw-card-angle, 0deg),
+    var(--accent-purple),
+    var(--accent-violet),
+    var(--accent-yellow),
+    var(--accent-coral),
+    var(--accent-purple)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: hwCardBorderSpin 4s linear infinite;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.hw-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hw-card:hover .hw-card-img {
+  transform: scale(1.05);
+}
+
+/* Blur overlay — fades in on hover */
+.hw-card-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px 28px;
+  background: rgba(0, 0, 0, 0.0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition: background 0.5s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease;
+  z-index: 2;
+}
+
+.hw-card:hover .hw-card-overlay {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Top content — slides in from top */
+.hw-card-top {
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s, opacity 0.4s ease 0.05s;
+}
+
+.hw-card:hover .hw-card-top {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.hw-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 50px;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.hw-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.hw-desc {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+/* Bottom content — rises from bottom */
+.hw-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.4s ease 0.1s;
+}
+
+.hw-card:hover .hw-card-bottom {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.hw-status {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.3px;
+}
+
+.hw-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: #ffffff;
+  color: #1a1a2e;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  white-space: nowrap;
+}
+
+.hw-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+}
+
+.hw-cta-arrow {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hw-cta:hover .hw-cta-arrow {
+  transform: rotate(-15deg) translate(2px, -2px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .ow-cards {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .hw-card {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (max-width: 600px) {
+  .ow-heading {
+    font-size: 1.8rem;
+  }
+  .hw-card {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+/* ===== OUR WORK — Swiper coverflow carousel ===== */
+.ow-carousel-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 0 0;
+}
+
+.ow-swiper {
+  padding: 20px 0 16px;
+  overflow: hidden;
+}
+
+.ow-swiper .swiper-slide {
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.6s ease;
+  background: transparent;
+  transform: scale(0.85);
+  opacity: 0.6;
+}
+
+.ow-swiper .swiper-slide-active {
+  transform: scale(1.05) !important;
+  z-index: 2;
+  opacity: 1;
+}
+
+.ow-swiper .swiper-slide-prev,
+.ow-swiper .swiper-slide-next {
+  transform: scale(0.85);
+  opacity: 0.7;
+}
+
+.ow-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+}
+
+/* Active center slide — handled above */
+
+/* Pagination dots */
+.ow-pagination {
+  margin-top: 16px;
+}
+.ow-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.15);
+  opacity: 1;
+  transition: background 0.3s, transform 0.3s;
+}
+.ow-pagination .swiper-pagination-bullet-active {
+  background: var(--accent-purple);
+  transform: scale(1.3);
+}
+
+/* Info panel below carousel */
+.ow-slide-info {
+  text-align: center;
+  padding: 24px 20px 16px;
+  max-width: 560px;
+  margin: 0 auto;
+  min-height: 140px;
+}
+
+.ow-slide-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 50px;
+  background: rgba(123, 79, 224, 0.15);
+  color: var(--accent-purple);
+  border: 1px solid rgba(123, 79, 224, 0.3);
+  margin-bottom: 14px;
+}
+
+.ow-slide-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  letter-spacing: -0.3px;
+  margin-bottom: 10px;
+}
+
+.ow-slide-desc {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.ow-slide-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ow-slide-status {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #888;
+  letter-spacing: 0.3px;
+}
+
+.ow-slide-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  background: var(--accent-purple);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  white-space: nowrap;
+}
+
+.ow-slide-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(123, 79, 224, 0.35);
+}
+
+/* Hide CTA when empty */
+.ow-slide-cta[href=""],
+.ow-slide-cta:not([href]) {
+  display: none;
+}
+
+/* ===== FOUNDERS — Scroll scatter (dark brand background) ===== */
+.founders-scatter {
+  position: relative;
+  /* Extra height so that: (1) scatter finishes early in the scroll range,
+     (2) cards idle for a beat, (3) the team section has a comfortable
+     runway to slide up over the bottom without clipping any cards. */
+  height: 340vh;
+  background: #07060f; /* deep brand-dark (almost black with purple undertone) */
+  /* Sits BELOW .our-work (z-index 5) so the white tile's rounded bottom
+     corners can cut into this dark surface and visually "lift up" off it. */
+  z-index: 2;
+  overflow: hidden;
+  /* Flat top — the visual curve comes from the white Our Work tile
+     above, not from this section. Pulled up by the tile's corner
+     radius so the dark fills in behind the tile's rounded bottom
+     corners (otherwise the page background would show through). */
+  border-radius: 0;
+  margin-top: -36px;
+}
+
+/* Radial brand glow behind everything — gives the dark surface a soft purple halo */
+.fs-bg-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 50%, rgba(123, 79, 224, 0.28), transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(74, 32, 176, 0.18), transparent 70%);
+}
+
+/* Subtle noise grain on top of the dark background */
+.fs-bg-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+  opacity: 0.18;
+}
+
+.founders-scatter-sticky {
+  position: relative;
+  height: var(--vh-full);
+  min-height: 640px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Desktop: scroll wrapper is invisible — cards scatter via position: absolute */
+.fs-cards-scroll-wrap {
+  position: static;
+  display: contents;
+}
+
+/* Hero text — always centered, fades/scales in on scroll */
+.fs-hero-text {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.7) translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0, 1, 0.5, 1);
+}
+
+.fs-hero-text.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.fs-hero-number {
+  font-size: clamp(5rem, 13vw, 10rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -4px;
+  line-height: 1.15;
+  padding-bottom: 0.1em;
+  display: block;
+  text-shadow: 0 2px 40px rgba(123, 79, 224, 0.5);
+  transition: color 0.3s ease;
+}
+
+/* Gradient state when counter reaches 100 — always stays */
+.fs-hero-number.fs-gradient {
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-yellow), var(--accent-violet), var(--accent-coral), var(--accent-purple));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: none;
+  animation: ow-gradient-shift 3s ease infinite;
+}
+
+.fs-hero-title {
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 800;
+  color: #ffffff;
+  display: block;
+  margin-top: 8px;
+  letter-spacing: -0.5px;
+}
+
+.fs-hero-sub {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+  margin: 12px auto 0;
+}
+
+/* Animated gradient border for card hover */
+@property --fs-card-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes fsCardBorderSpin {
+  to { --fs-card-angle: 360deg; }
+}
+
+/* Founder cards — small white capsule. On hover the capsule grows
+   (still capsule-shaped, NEVER morphs to a rounded rectangle) and the
+   role + LinkedIn cue slide in below the company. The whole card is an
+   <a> tag → clicking anywhere opens that founder's LinkedIn search.
+   Animated conic-gradient ring lights up around the edge on hover. */
+.fs-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 6px clamp(14px, 1vw + 4px, 22px) 6px 6px;
+  /* SMALL default capsule — fluid width/height keeps the scatter balanced
+     against the hero number on every screen size. */
+  width: var(--size-fs-card-w);
+  height: var(--size-fs-card-h);
+  box-sizing: border-box;
+  border-radius: 999px;          /* stays 999 on hover too — capsule, not card */
+  z-index: 5;
+  isolation: isolate;
+  will-change: transform, opacity;
+  text-decoration: none;
+  color: inherit;
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.42),
+    0 5px 14px rgba(74, 32, 176, 0.22);
+  cursor: pointer;
+  transition:
+    width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    gap 0.4s ease,
+    padding 0.4s ease,
+    box-shadow 0.35s ease;
+  opacity: 0;
+  /* IMPORTANT: NO overflow:hidden — that would clip the gradient ring
+     drawn by ::before with inset:-2px. Text overflow is clipped at the
+     .fs-card-text level instead. */
+  /* The JS sets --scatter-transform (translate + rotate). */
+  transform: translate(-50%, -50%) var(--scatter-transform, none);
+}
+
+/* ---- Spinning conic-gradient ring (visible only on hover) ----
+   Sits 2px outside the card edge. Because the parent has NO overflow:hidden,
+   this ring shows through cleanly. The white inner fill is on ::after. */
+.fs-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--fs-card-angle, 0deg),
+    var(--accent-purple),
+    var(--accent-violet),
+    var(--accent-yellow),
+    var(--accent-coral),
+    var(--accent-purple)
+  );
+  z-index: -2;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.fs-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #ffffff;
+  z-index: -1;
+}
+
+/* Hover state — capsule GROWS but border-radius stays 999px so the shape
+   never morphs from oval into a rectangle. */
+.fs-card:hover {
+  width: 232px;
+  height: 132px;
+  gap: 14px;
+  padding: 14px 22px 14px 14px;
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.6),
+    0 0 50px rgba(123, 79, 224, 0.6);
+  z-index: 50;
+}
+
+.fs-card:hover::before {
+  opacity: 1;
+  animation: fsCardBorderSpin 4.5s linear infinite;
+}
+
+.fs-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Avatar — small in default capsule, slightly bigger on hover */
+.fs-avatar {
+  width: var(--size-fs-avatar);
+  height: var(--size-fs-avatar);
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #f0eefb;
+  border: 2px solid rgba(123, 79, 224, 0.35);
+  box-shadow: 0 4px 12px rgba(74, 32, 176, 0.28);
+  transition:
+    width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.35s ease,
+    align-self 0.4s ease;
+}
+
+.fs-card:hover .fs-avatar {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(123, 79, 224, 0.6);
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.fs-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Text column — handles its own overflow clipping (since .fs-card itself
+   does NOT have overflow:hidden, to keep the gradient ring visible). */
+.fs-card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.fs-card-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0f0f23;
+  letter-spacing: 0.1px;
+  line-height: 1.15;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: font-size 0.4s ease;
+}
+
+.fs-card-co {
+  font-size: 0.78rem;
+  font-weight: 600;
+  /* Bumped from rgba(26,26,46,0.55) ~3.85:1 to 0.78 ~6.5:1 on white.
+     Passes WCAG AA comfortably. */
+  color: rgba(26, 26, 46, 0.78);
+  margin-top: 2px;
+  line-height: 1.1;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Role + arrow — hidden in compact capsule, slide in on hover/focus */
+.fs-card-role {
+  display: block;
+  font-style: normal;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--accent-purple);
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease 0.05s,
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.05s,
+    margin 0.4s ease;
+}
+
+.fs-card-arrow {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  /* Bumped from 0.5 (~3.3:1) → 0.72 (~6:1) on white. */
+  color: rgba(26, 26, 46, 0.72);
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(8px);
+  white-space: nowrap;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease 0.1s,
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s,
+    margin 0.4s ease,
+    color 0.3s ease;
+}
+
+.fs-card:hover .fs-card-name,
+.fs-card:focus-visible .fs-card-name {
+  font-size: 0.92rem;
+}
+
+/* Keyboard-accessible reveal (WCAG 1.3.1, 2.1.1):
+   role + arrow fade in on :focus-visible the same way they do on hover,
+   so a user tabbing through the founder grid can actually read the
+   designation and company on every card. */
+.fs-card:hover .fs-card-role,
+.fs-card:focus-visible .fs-card-role {
+  max-height: 18px;
+  margin-top: 6px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fs-card:hover .fs-card-arrow,
+.fs-card:focus-visible .fs-card-arrow {
+  max-height: 18px;
+  margin-top: 8px;
+  opacity: 1;
+  transform: translateY(0);
+  color: var(--accent-purple);
+}
+
+.fs-card:hover::before,
+.fs-card:focus-visible::before {
+  opacity: 1;
+  animation: fsCardBorderSpin 4.5s linear infinite;
+}
+
+.fs-card:hover,
+.fs-card:focus-visible {
+  width: 232px;
+  height: 132px;
+  gap: 14px;
+  padding: 14px 22px 14px 14px;
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.6),
+    0 0 50px rgba(123, 79, 224, 0.6);
+  z-index: 50;
+}
+
+.fs-card:hover .fs-avatar,
+.fs-card:focus-visible .fs-avatar {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(123, 79, 224, 0.6);
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .founders-scatter { height: 260vh; }
+  .fs-hero-number { font-size: 4.5rem; letter-spacing: -2px; }
+  .fs-hero-title { font-size: 1.3rem; }
+  .fs-card {
+    width: 180px;
+    /* 48px min touch target (WCAG 2.5.5 AAA). */
+    height: 56px;
+    min-height: 48px;
+    padding: 6px 14px 6px 6px;
+    gap: 8px;
+  }
+  .fs-card-name { font-size: 0.82rem; }
+  .fs-card-co { font-size: 0.74rem; margin-top: 1px; }
+  .fs-avatar { width: 44px; height: 44px; }
+  .fs-card:hover,
+  .fs-card:focus-visible {
+    width: 204px;
+    height: 120px;
+  }
+  .fs-card:hover .fs-avatar,
+  .fs-card:focus-visible .fs-avatar { width: 52px; height: 52px; }
+}
+
+/* ===== TEAM SECTION ===== */
+/* ===== TEAM — Fanned Carousel ===== */
+/* Team slides UP OVER the bottom of the founders-scatter section
+   (instead of the previous abrupt hand-off). Higher z-index than
+   founders-scatter (z:2), pulled up 100vh via negative margin, and
+   rounded top corners so it reads as a card lifting into place. */
+.team-section {
+  background: #ffffff;
+  position: relative;
+  z-index: 10;
+  padding: 80px 24px 100px;
+  text-align: center;
+  overflow: visible;
+  border-radius: 48px 48px 0 0;
+  margin-top: -100vh;
+  box-shadow: 0 -24px 80px rgba(0, 0, 0, 0.35);
+}
+
+.team-heading {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-violet), var(--accent-yellow), var(--accent-coral));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ow-gradient-shift 3s ease infinite;
+  margin-bottom: 8px;
+}
+
+.team-sub {
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 60px;
+}
+
+/* ===== Avatar Pop Team Layout ===== */
+@property --ta-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes taRingSpin {
+  to { --ta-angle: 360deg; }
+}
+
+.team-avatars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0 180px;
+}
+
+.ta-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  margin-left: -40px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.ta-item:first-child {
+  margin-left: 0;
+}
+
+.ta-item:hover,
+.ta-item:focus-visible {
+  z-index: 10;
+  margin-left: 10px;
+  margin-right: 40px;
+}
+
+.ta-item:first-child:hover,
+.ta-item:first-child:focus-visible {
+  margin-left: 0;
+}
+
+.ta-ring {
+  width: var(--size-ta-ring);
+  height: var(--size-ta-ring);
+  border-radius: 50%;
+  padding: 4px;
+  background: conic-gradient(from var(--ta-angle, 0deg), var(--accent-purple), var(--accent-violet), var(--accent-yellow), var(--accent-coral), var(--accent-purple));
+  animation: taRingSpin 3s linear infinite;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.ta-center .ta-ring {
+  width: calc(var(--size-ta-ring) * 1.14);
+  height: calc(var(--size-ta-ring) * 1.14);
+}
+
+.ta-item:hover .ta-ring,
+.ta-item:focus-visible .ta-ring {
+  transform: scale(1.25);
+  box-shadow:
+    0 10px 40px rgba(74, 32, 176, 0.3),
+    0 6px 20px rgba(253, 214, 49, 0.15),
+    0 0 60px rgba(123, 79, 224, 0.2);
+}
+
+.ta-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f0f0f4;
+}
+
+.ta-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: filter 0.4s ease;
+}
+
+.ta-item:hover .ta-photo img,
+.ta-item:focus-visible .ta-photo img {
+  filter: brightness(0.85);
+}
+
+.ta-info {
+  position: absolute;
+  /* On hover the ring scales 1.25× from its center, so its bottom edge
+     extends ≈ 12.5% × ring-height BELOW the unscaled bottom (≈ 35px for
+     the 280px rings, ≈ 40px for the 320px center ring). The info block
+     was previously sitting at +14px and getting eaten by the scaled
+     photo. Pushing it to +56px gives clean breathing room past the
+     scaled bottom + a small visual gap. .ta-center bumps a touch more. */
+  top: calc(100% + 56px);
+  left: 50%;
+  width: 260px;
+  text-align: center;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.ta-center .ta-info {
+  top: calc(100% + 64px);
+}
+
+.ta-item:hover .ta-info,
+.ta-item:focus-visible .ta-info {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.ta-name {
+  display: block;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+
+.ta-role {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent-purple);
+  margin-bottom: 6px;
+}
+
+.ta-bio {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .team-avatars { gap: 0; }
+  .ta-item { margin-left: -20px; }
+  .ta-item:first-child { margin-left: 0; }
+  .ta-ring { width: 160px; height: 160px; }
+  .ta-center .ta-ring { width: 200px; height: 200px; }
+}
+
+@media (max-width: 768px) {
+  .team-avatars {
+    flex-wrap: wrap;
+    gap: 0;
+    padding-bottom: 80px;
+  }
+  .ta-item { margin-left: -15px; }
+  .ta-item:first-child { margin-left: 0; }
+  .ta-ring { width: 120px; height: 120px; }
+  .ta-center .ta-ring { width: 150px; height: 150px; }
+  .ta-info { opacity: 1; transform: translate(-50%, 0); position: static; width: auto; }
+  .team-cta-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ===== WORK WITH US ===== */
+.wtu-section {
+  display: none;
+  background: #ffffff;
+  padding: 100px 24px;
+  justify-content: center;
+  position: relative;
+  z-index: 3;
+  align-items: center;
+}
+
+.wtu-card {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 28px;
+  padding: 3px;
+  background: conic-gradient(
+    from var(--wtu-angle, 0deg),
+    var(--accent-purple),
+    var(--accent-violet),
+    var(--accent-yellow),
+    var(--accent-coral),
+    var(--accent-purple)
+  );
+  animation: wtuGradientSpin 4s linear infinite;
+}
+
+@property --wtu-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes wtuGradientSpin {
+  to { --wtu-angle: 360deg; }
+}
+
+.wtu-card-inner {
+  background: var(--dark-navy);
+  border-radius: 26px;
+  padding: 64px 56px;
+}
+
+.wtu-heading {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+.wtu-accent {
+  background: linear-gradient(90deg, var(--accent-yellow), var(--accent-coral));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.wtu-desc {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+  max-width: 600px;
+  margin-bottom: 32px;
+}
+
+.wtu-slots {
+  margin: 28px 0 36px;
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wtu-slots-number {
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, var(--accent-yellow), var(--accent-coral));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.wtu-slots-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.wtu-slots-row {
+  display: flex;
+  gap: 6px;
+}
+
+.wtu-slot {
+  flex: 1;
+  height: 14px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.22);
+  position: relative;
+  overflow: hidden;
+}
+
+.wtu-slot.filled {
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-yellow));
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.4);
+}
+
+.wtu-cta {
+  display: inline-block;
+  padding: 14px 32px;
+  background: #ffffff;
+  color: var(--dark-navy);
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 16px;
+}
+
+.wtu-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+}
+
+.wtu-email {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.wtu-email strong {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 768px) {
+  .wtu-card-inner {
+    padding: 40px 28px;
+  }
+  .wtu-heading {
+    font-size: 1.8rem;
+  }
+}
+
+/* ===== CONTACT ===== */
+/* ===== CTA + Contact Section ===== */
+@property --cta-border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes ctaBorderSpin {
+  to { --cta-border-angle: 360deg; }
+}
+
+.cta-contact-section {
+  position: relative;
+  z-index: 3;
+  padding: 80px 5%;
+  background: #ffffff;
+}
+
+.cta-contact-card {
+  border-radius: 40px;
+  padding: 4px;
+  background: conic-gradient(
+    from var(--cta-border-angle, 0deg),
+    var(--accent-purple),
+    var(--accent-violet),
+    var(--accent-yellow),
+    var(--accent-coral),
+    var(--accent-purple)
+  );
+  animation: ctaBorderSpin 4s linear infinite;
+  overflow: hidden;
+  max-width: 1180px;
+  margin: 0 auto;
+  box-shadow: 0 30px 80px rgba(74, 32, 176, 0.18), 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.cta-contact-inner {
+  background: #0a0a0a;
+  border-radius: 36px;
+  padding: 72px 64px;
+}
+
+.cta-contact-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 64px;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.cta-heading {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.cta-accent {
+  background: linear-gradient(90deg, var(--accent-yellow), var(--accent-coral));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cta-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  background: #ffffff;
+  color: var(--dark-navy);
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 50px;
+  text-decoration: none;
+  margin-top: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,255,255,0.15);
+}
+
+.cta-right-heading {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 32px;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-violet), var(--accent-yellow), var(--accent-coral));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ow-gradient-shift 3s ease infinite;
+}
+
+.cta-contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contact-block h4 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  /* Bumped from rgba(255,255,255,0.35) (~3.8:1 on #0a0a0a — borderline)
+     to 0.72 which gives ~11:1 and stays crisp on the dark card. */
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 6px;
+}
+
+.contact-block p {
+  font-size: 1rem;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+.contact-block a {
+  color: var(--accent-yellow);
+  /* Underline as a non-color-dependent link affordance (WCAG 1.4.1) —
+     users with color blindness and screen magnifiers still get a
+     clear "this is a link" signal beyond the yellow tint. */
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.contact-block a:hover {
+  color: #ffffff;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  padding: 40px 48px;
+  border-top: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--text-muted);
+  position: relative;
+  z-index: 2;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-violet), var(--accent-yellow), var(--accent-coral));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav {
+    padding: 16px 24px;
+  }
+
+  .nav-links {
+    gap: 20px;
+  }
+
+  .nav-links a {
+    font-size: 0.82rem;
+  }
+
+  .section {
+    padding: 80px 20px;
+  }
+
+  .cards-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .founders-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .cta-contact-card {
+    border-radius: 32px;
+  }
+  .cta-contact-inner {
+    padding: 48px 28px;
+    border-radius: 28px;
+  }
+  .cta-contact-section {
+    padding: 60px 4%;
+  }
+
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — NARROW WIDTHS
+   ============================================================
+   Breakpoint ladder:
+     1024  tablet (laptop landscape)   — scale tokens, keep pins
+     768   large phone / tablet portrait — UNPIN everything, stack
+     480   phone                         — single column, compact
+     360   small phone                   — safety minimums
+   Below 768 is where the architectural switch happens:
+     - sticky/pinned sections go static
+     - horizontal timeline → vertical timeline
+     - founders scatter → grid
+     - WMI split cards → vertical stack
+   JS scroll handlers also check innerWidth and no-op below 768.
+   ============================================================ */
+
+/* ============================================================
+   SHORT-VIEWPORT COMPRESSION — max-height breakpoints
+   ============================================================
+   Design baseline assumes ~900px viewport HEIGHT (Chrome fullscreen
+   on a 14" MacBook). Safari fullscreen has a taller browser chrome
+   (~870px viewport), and both browsers windowed drop to 780–820px.
+   Sections with `height: 100vh` sticky pinning (hero, WMI, Journey,
+   Our Work, Team) clip content when the viewport is shorter than
+   the content was designed for.
+
+   These rules use `max-height` media queries (orthogonal to the
+   `max-width` breakpoints below) to shrink heights / fonts / padding
+   proportionally when the viewport is SHORT, leaving wide-and-tall
+   1440×900+ displays completely untouched.
+
+   Thresholds:
+     max-height: 880px → moderate (Safari fullscreen ~870, Chrome windowed)
+     max-height: 760px → tight    (Safari windowed, small laptops) */
+
+/* ---- 880px — moderate compression ---- */
+/* IMPORTANT: Only touch sections that are pinned to 100vh (Hero, WMI,
+   Our Journey, Team) — sections that flow naturally (Our Work, Founders
+   below min-height) can simply scroll if content is taller than viewport.
+   The journey's hand-tuned .tl-piece margin-top offsets are preserved
+   because they define the curved thread path — killing them flattens
+   the thread into a horizontal line that cuts through the intro text. */
+@media (max-height: 880px) {
+  /* ----- Journey / timeline: shrink image & title, keep offsets ----- */
+  :root {
+    --size-tl-img: clamp(200px, 5vw + 148px, 260px);
+    --size-tl-col: clamp(230px, 6vw + 166px, 300px);
+    --size-tl-gap: clamp(40px, 3vw + 20px, 80px);
+  }
+  .tl-title {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    top: 36px;
+    left: 64px;
+  }
+  .tl-intro-block { padding-top: 32px; max-width: 260px; }
+  .tl-intro-text { font-size: 0.78rem; }
+  .tl-year { font-size: 1.1rem; padding: 5px 14px; }
+  .tl-piece p { font-size: 0.78rem; max-width: 260px; }
+
+  /* ----- Team: tighten padding AND ensure section fills viewport -----
+     min-height keeps the white background consistent with no next-section
+     bleed-through when content is shorter than the viewport. */
+  .team-section {
+    padding: 56px 24px 60px;
+    min-height: var(--vh-full);
+  }
+  .team-heading { font-size: clamp(1.7rem, 3.6vw, 2.4rem); }
+  .team-sub { margin-bottom: 20px; }
+  .team-avatars { padding: 16px 0 120px; }
+
+  /* ----- Hero / WMI heading only (no layout changes) ----- */
+  .wmi-heading { font-size: clamp(1.8rem, 4vw, 2.8rem); }
+}
+
+/* ---- 760px — tight compression (small laptops, Safari windowed) ---- */
+@media (max-height: 760px) {
+  :root {
+    --size-tl-img: clamp(170px, 4vw + 120px, 210px);
+    --size-tl-col: clamp(200px, 5vw + 132px, 240px);
+    --size-tl-gap: clamp(32px, 2vw + 16px, 56px);
+  }
+  .tl-title {
+    font-size: clamp(2rem, 4.4vw, 3rem);
+    top: 28px;
+    left: 48px;
+  }
+  .tl-intro-block { padding-top: 24px; }
+  .tl-intro-text { font-size: 0.74rem; }
+  .tl-year { font-size: 1rem; padding: 4px 12px; }
+  .tl-piece p { font-size: 0.74rem; line-height: 1.6; }
+
+  .team-section {
+    padding: 40px 24px 48px;
+    min-height: var(--vh-full);
+  }
+  .team-heading { font-size: clamp(1.5rem, 3.2vw, 2rem); }
+  .team-sub { margin-bottom: 14px; }
+  .team-avatars { padding: 10px 0 90px; }
+
+  .wmi-heading { font-size: clamp(1.6rem, 3.6vw, 2.4rem); }
+}
+
+/* ---- 1024px tablet ---- */
+/* Between 901–1439px we rely on the fluid clamp() tokens in :root to
+   scale fonts and sizes smoothly — no individual overrides needed in
+   this range. Structural/layout changes (pin/unpin) live below. */
+
+/* ---- 900px mid-range (non-fullscreen Mac window) ---- */
+/* Below 900px the parallax stacking (negative margins + z-index layering)
+   breaks down. Zoom is removed, so we switch to normal document flow. */
+@media (max-width: 900px) {
+  /* Font sizes for non-zoomed narrow viewport */
+  .hero-heading { font-size: clamp(1.8rem, 4vw, 2.6rem); max-width: 88vw; }
+  .hero-sub { font-size: clamp(0.9rem, 1.8vw, 1.05rem); }
+  .hero-logo-img { width: clamp(160px, 18vw + 40px, 240px); }
+  .wmi-heading { font-size: clamp(1.6rem, 3.5vw, 2.4rem); }
+  .tl-title { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+  .ow-heading { font-size: clamp(1.8rem, 4vw, 3rem); }
+  .cta-heading { font-size: clamp(1.6rem, 4vw, 2.4rem); }
+
+  /* Unpin everything — normal flow */
+  .hero {
+    position: relative;
+    border-radius: 0;
+  }
+  .wmi-pin-wrap {
+    height: auto !important;
+    margin-top: 0 !important;
+  }
+  .wmi-section {
+    position: static !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 70px 5% 80px;
+  }
+  .wmi-video-card {
+    position: static !important;
+    width: 100%;
+    height: 40vh;
+    min-height: 260px;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .wmi-text-block {
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    text-align: center;
+  }
+  .wmi-card {
+    position: static !important;
+    opacity: 1 !important;
+    transform: none !important;
+    margin: 16px auto;
+    width: min(90vw, 500px);
+  }
+
+  /* Remove all negative margin overlaps */
+  .our-work {
+    margin-top: 0 !important;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .team-section {
+    margin-top: 0 !important;
+    padding: 60px 20px 60px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .team-avatars { padding: 30px 0 60px; }
+
+  /* History/journey — unpin */
+  .history-master { height: auto !important; }
+  .history-master-sticky {
+    position: static !important;
+    height: auto !important;
+  }
+
+  /* CTA */
+  .cta-contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .cta-contact-inner { padding: 52px 36px; }
+  .cta-heading { font-size: clamp(1.6rem, 4vw, 2.4rem); }
+}
+
+/* ---- 768px and below: the big architectural switch ---- */
+@media (max-width: 768px) {
+  /* ===== NAVBAR — tap targets + compact ===== */
+  .navbar {
+    padding: 0;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+  .nav-inner {
+    height: 56px;
+    padding: 0 16px;
+    gap: 8px;
+    position: relative;
+  }
+  .nav-logo-img { height: 28px; }
+
+  /* Hamburger button */
+  .nav-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-hamburger.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-hamburger.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Dropdown menu */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  }
+  .nav-links.nav-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .nav-link {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    padding: 12px 24px;
+  }
+  .nav-btn {
+    font-size: 1.1rem;
+    padding: 14px 32px;
+    margin-top: 8px;
+  }
+
+  /* ===== HERO — release sticky, normal flow ===== */
+  .hero {
+    position: relative !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 90px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+  .hero-text-content {
+    position: static;
+    transform: none !important;
+    opacity: 1 !important;
+    width: 100%;
+    text-align: center;
+  }
+  .hero-logo { margin-bottom: 20px; }
+  .hero-heading {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    max-width: 100%;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+  .hero-line-mask {
+    line-height: 1.2;
+    padding-bottom: 0.15em;
+    margin-bottom: -0.15em;
+  }
+  .hero-sub {
+    font-size: 1rem;
+    max-width: 100%;
+    line-height: 1.65;
+  }
+  /* Hide the floating video on phones — heavy + visually redundant
+     with the existing CMF logo + heading block above it. */
+  .hero-video-wrap { display: none !important; }
+  .scroll-indicator { display: none !important; }
+
+  /* ===== WMI — UNPIN, stack everything vertically ===== */
+  .wmi-pin-wrap {
+    height: auto !important;
+    margin-top: 0 !important;
+  }
+  .wmi-section {
+    position: static !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 70px 20px 80px;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+  .wmi-video-card {
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    width: 100%;
+    max-width: 560px;
+    height: 240px;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .wmi-video-card .wmi-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .wmi-text-block {
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    text-align: center;
+    width: 100%;
+  }
+  .wmi-heading {
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+    line-height: 1.15;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .wmi-line-mask { line-height: 1.2; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+  .wmi-line {
+    /* release any intro-reveal transform so text is visible on phones */
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .wmi-sub {
+    opacity: 1 !important;
+    font-size: 1rem;
+  }
+  /* Wmi cards: release absolute positioning, stack in column */
+  .wmi-cards {
+    position: static !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    pointer-events: auto;
+  }
+  .wmi-card {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    width: min(100%, 440px) !important;
+    height: auto !important;
+    min-height: 240px;
+    padding: 28px 26px 30px;
+  }
+
+  /* ===== OUR JOURNEY — convert to vertical timeline ===== */
+  #about.history-master,
+  .history-master {
+    height: auto !important;
+  }
+  .history-master-sticky {
+    position: static !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible;
+    display: block;
+    padding: 70px 20px 40px;
+  }
+  /* Hide studio video on mobile */
+  .history-intro-layer {
+    display: none !important;
+  }
+  .history-hscroll-layer {
+    position: static !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    display: block;
+    width: 100%;
+  }
+  .journey-bg-layers { display: none; }
+  .tl-title {
+    position: static !important;
+    text-align: left;
+    margin: 0 0 36px;
+    font-size: clamp(2rem, 7vw, 2.8rem);
+  }
+  /* Hide the curved SVG thread */
+  .tl-thread-svg { display: none !important; }
+  .history-hscroll-track {
+    position: static !important;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0;
+    width: 100% !important;
+    padding: 0 0 20px 0;
+    align-items: stretch;
+  }
+  .tl-col {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-right: 0 !important;
+  }
+  /* Hide the intro text on mobile */
+  .tl-intro-block { display: none; }
+
+  /* Sticky card stack — each card sticks, next slides on top */
+  .tl-col:has(.tl-piece) {
+    position: sticky;
+    top: 56px; /* flush below fixed navbar */
+    z-index: auto;
+  }
+  /* Stagger z-index so later cards stack on top */
+  .tl-col:nth-child(2) { z-index: 1; }
+  .tl-col:nth-child(3) { z-index: 2; }
+  .tl-col:nth-child(4) { z-index: 3; }
+  .tl-col:nth-child(5) { z-index: 4; }
+  .tl-col:nth-child(6) { z-index: 5; }
+  .tl-col:nth-child(7) { z-index: 6; }
+  .tl-col:nth-child(8) { z-index: 7; }
+
+  .tl-piece {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    max-width: 100% !important;
+    transform: none !important;
+    rotate: 0deg !important;
+    text-align: left;
+    background: #111;
+    border-radius: 20px;
+    padding: 20px !important;
+    opacity: 1 !important;
+    filter: none !important;
+    box-shadow: none;
+    position: relative;
+  }
+  /* White mask below each card to hide previous card's text */
+  .tl-col:has(.tl-piece)::after {
+    content: '';
+    display: block;
+    height: 40px;
+    background: #fff;
+    margin-top: -1px;
+  }
+  .tl-piece::before { display: none; }
+  .tl-piece::after { display: none; }
+  .tl-img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4/3 !important;
+    margin: 0 0 16px 0 !important;
+    animation: none !important;
+  }
+  .tl-img img { border-radius: 14px; }
+  .tl-year {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    padding: 4px 14px;
+    border-radius: 6px;
+    align-self: flex-start;
+  }
+  .tl-piece p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 100%;
+    padding: 0;
+    color: rgba(255,255,255,0.8);
+    align-self: flex-start;
+    text-align: left;
+  }
+  /* Skip button — floating, hidden by default, shown via JS when in journey */
+  .tl-skip-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    background: var(--accent-purple);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(123, 79, 224, 0.4);
+    z-index: 90;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .tl-skip-btn.tl-skip-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ===== OUR WORK — single-col gallery ===== */
+  .our-work {
+    margin-top: 0 !important;
+    padding: 60px 20px 70px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .ow-heading {
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
+    margin-bottom: 12px;
+  }
+  .ow-sub { font-size: 0.98rem; margin-bottom: 20px; }
+  .ow-featured-video {
+    border-radius: 14px;
+    margin-bottom: 28px;
+  }
+  .ow-video-play svg { width: 56px; height: 40px; }
+  .ow-carousel-wrap { max-width: 100%; }
+  .ow-swiper .swiper-slide { /* auto height from poster */ }
+  .ow-slide-title { font-size: 1.35rem; }
+  .ow-slide-desc { font-size: 0.88rem; }
+  .ow-slide-info { min-height: 160px; padding: 20px 16px 0; }
+
+  /* ===== FOUNDERS — grid instead of scatter ===== */
+  .founders-scatter {
+    height: auto !important;
+    padding: 70px 16px;
+    margin-top: 0 !important;
+    border-radius: 0;
+  }
+  .founders-scatter-sticky {
+    position: static !important;
+    visibility: visible !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    display: block;
+    padding: 0;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .fs-hero-text {
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    text-align: center;
+    margin-bottom: 36px;
+    display: block;
+  }
+  .fs-hero-number {
+    font-size: clamp(3rem, 14vw, 5rem);
+    display: block;
+  }
+  .fs-hero-title {
+    font-size: 1.15rem;
+    display: block;
+    margin-top: 4px;
+  }
+  .fs-hero-sub {
+    font-size: 0.88rem;
+    margin-top: 10px;
+    max-width: 100%;
+  }
+  /* Card grid container — CSS-only wrap using the parent sticky as grid */
+  .fs-cards-grid,
+  .founders-scatter-sticky {
+    /* We re-use the sticky container as a 2-col grid since all fs-cards
+       are its direct children. The hero-text spans both columns. */
+  }
+  .founders-scatter-sticky {
+    display: block !important;
+    max-width: 100%;
+    overflow: visible;
+  }
+  .founders-scatter-sticky .fs-hero-text {
+    margin-bottom: 24px;
+  }
+  /* Single-card auto-rotating carousel for founder cards on mobile */
+  .fs-cards-scroll-wrap {
+    display: block !important;
+    position: relative;
+    overflow: hidden;
+    min-height: 110px;
+    padding: 0 16px;
+  }
+  .fs-card {
+    position: absolute !important;
+    top: 0 !important;
+    left: 16px !important;
+    right: 16px !important;
+    transform: none !important;
+    opacity: 0 !important;
+    visibility: hidden;
+    width: calc(100% - 32px) !important;
+    height: auto !important;
+    min-height: 90px;
+    padding: 14px 18px 14px 14px;
+    gap: 14px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.4),
+                0 0 30px rgba(74, 32, 176, 0.25);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    pointer-events: none;
+  }
+  .fs-card.fs-card-active {
+    opacity: 1 !important;
+    visibility: visible;
+    pointer-events: auto;
+    position: relative !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+  }
+  .fs-card::before { display: none; }
+  .fs-card:hover,
+  .fs-card:focus-visible {
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+  }
+  .fs-card:hover .fs-avatar,
+  .fs-card:focus-visible .fs-avatar {
+    width: 60px;
+    height: 60px;
+    align-self: center;
+    margin-top: 0;
+  }
+  .fs-avatar { width: 60px; height: 60px; }
+  .fs-card-name { font-size: 0.95rem; }
+  .fs-card-co { font-size: 0.78rem; margin-top: 2px; }
+  /* Show role and company on mobile single-card view */
+  .fs-card-role {
+    display: block !important;
+    max-height: 20px !important;
+    opacity: 0.7 !important;
+    transform: none !important;
+    font-size: 0.72rem;
+    margin-top: 4px;
+  }
+  .fs-card-arrow { display: none; }
+
+  /* ===== TEAM — horizontal scrolling carousel ===== */
+  .team-section {
+    margin-top: 0 !important;
+    padding: 40px 0 50px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .team-section { padding: 50px 20px 50px; }
+  .team-heading { font-size: clamp(1.8rem, 6vw, 2.4rem); margin-bottom: 4px; padding: 0; }
+  .team-sub { font-size: 0.95rem; margin-bottom: 24px; padding: 0; }
+  .team-avatars {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 24px;
+    padding: 0;
+    overflow: visible;
+    justify-items: center;
+  }
+  /* Center the 5th (last) item across both columns */
+  .ta-item:last-child {
+    grid-column: 1 / -1;
+  }
+  .ta-item {
+    margin-left: 0 !important;
+    flex: none;
+    width: auto;
+    min-width: 0;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .ta-ring { width: 80px !important; height: 80px !important; }
+  .ta-center .ta-ring { width: 80px !important; height: 80px !important; }
+  .ta-info {
+    opacity: 1 !important;
+    position: static;
+    transform: none !important;
+    width: auto;
+    text-align: center;
+    margin-top: 0;
+  }
+  .ta-name { font-size: 0.82rem !important; white-space: nowrap; font-weight: 700 !important; }
+  .ta-role { font-size: 0.62rem !important; letter-spacing: 0.5px; opacity: 0.7; }
+  .ta-bio { display: none; }
+
+  /* ===== CONTACT — single column ===== */
+  .cta-contact-section { padding: 60px 16px 80px; }
+  .cta-contact-inner { padding: 44px 24px; border-radius: 24px; }
+  .cta-contact-card { border-radius: 28px; }
+  .cta-contact-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .cta-heading { font-size: clamp(1.6rem, 6vw, 2rem); }
+  .cta-desc { font-size: 0.95rem; }
+  .cta-btn { width: 100%; text-align: center; padding: 16px 28px; }
+
+  /* ===== FOOTER ===== */
+  .footer { padding: 30px 16px 40px; }
+}
+
+/* ---- 480px phone ---- */
+@media (max-width: 480px) {
+  .nav-inner { padding: 0 12px; gap: 4px; }
+  .nav-links { gap: 2px; }
+  .nav-link { font-size: 0.72rem; padding: 10px 6px; }
+  .nav-btn { font-size: 0.72rem; padding: 10px 14px; }
+  .nav-logo-img { height: 28px; }
+
+  .hero { padding: 80px 16px 48px; }
+  .hero-heading { font-size: clamp(1.75rem, 9vw, 2.2rem); }
+  .hero-sub { font-size: 0.95rem; }
+  .hero-logo-img { width: clamp(150px, 40vw, 200px); }
+
+  .wmi-section { padding: 60px 16px 70px; gap: 28px; }
+  .wmi-heading { font-size: clamp(1.65rem, 8vw, 2.1rem); }
+  .wmi-video-card { height: 200px; }
+  .wmi-card { padding: 22px 20px 24px; min-height: 220px; }
+
+  .history-master-sticky { padding: 60px 16px 30px; }
+  .tl-title { font-size: clamp(1.65rem, 7vw, 2.1rem); margin-bottom: 24px; }
+  .history-intro-layer { height: 170px; margin-bottom: 24px; }
+
+  .our-work { padding: 50px 16px 60px; }
+  .ow-heading { font-size: clamp(1.65rem, 7vw, 2.1rem); }
+  .ow-swiper .swiper-slide { /* auto height from poster */ }
+  .ow-slide-title { font-size: 1.2rem; }
+  .ow-slide-info { min-height: 140px; }
+
+  .founders-scatter { padding: 60px 14px; }
+  .fs-hero-number { font-size: clamp(2.8rem, 16vw, 4.4rem); }
+  .fs-hero-title { font-size: 1rem; }
+
+  .team-avatars { gap: 24px 20px; }
+  .ta-ring { width: 80px !important; height: 80px !important; }
+  .ta-center .ta-ring { width: 80px !important; height: 80px !important; }
+
+  .cta-contact-section { padding: 50px 14px 70px; }
+  .cta-contact-inner { padding: 36px 20px; border-radius: 22px; }
+}
+
+/* ---- 360px tiny phone (safety minimums) ---- */
+@media (max-width: 360px) {
+  .nav-link { font-size: 0.68rem; padding: 10px 4px; min-width: 36px; }
+  .nav-btn { font-size: 0.68rem; padding: 10px 12px; }
+  .hero-heading { font-size: 1.55rem; }
+  .wmi-heading { font-size: 1.5rem; }
+  .wmi-card { min-height: 200px; padding: 20px 18px 22px; }
+  .tl-piece p { font-size: 0.9rem; }
+  .ta-ring { width: 68px !important; height: 68px !important; }
+  .ta-center .ta-ring { width: 68px !important; height: 68px !important; }
+  .ta-name { font-size: 0.78rem !important; }
+}
