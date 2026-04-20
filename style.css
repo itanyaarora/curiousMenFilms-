@@ -282,8 +282,16 @@ select:focus-visible,
   pointer-events: none;
 }
 
-body.loader-active {
-  overflow: hidden;
+/* Lock scroll on BOTH html and body while the intro loader is visible.
+   overflow:hidden on body alone is not enough — on mobile Safari (and some
+   desktops) the scroll happens on <html>, bypassing body.  touch-action:none
+   blocks trackpad/touch swipes, and overscroll-behavior:none prevents pull-
+   to-refresh.  JS also adds a scroll-reset listener as a final safety net. */
+html.loader-active,
+html.loader-active body {
+  overflow: hidden !important;
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 /* Animated color border — 4 edges */

@@ -22,7 +22,19 @@ function isNarrow() { return window.innerWidth <= NARROW_BREAKPOINT; }
   var loader = document.getElementById('swLoader');
   if (!loader) return;
 
+  // Lock scroll on both <html> and <body> (CSS uses html.loader-active)
+  document.documentElement.classList.add('loader-active');
   document.body.classList.add('loader-active');
+
+  // Safety net: force scroll to top if any scroll event sneaks through
+  // (e.g., momentum scroll that began before the lock kicked in)
+  window.scrollTo(0, 0);
+  function forceScrollTop() { window.scrollTo(0, 0); }
+  window.addEventListener('scroll', forceScrollTop);
+
+  // Block wheel events during loader (belt-and-suspenders)
+  function blockWheel(e) { e.preventDefault(); }
+  window.addEventListener('wheel', blockWheel, { passive: false });
 
   var lines = loader.querySelectorAll('.sw-line');
   var gradientEls = loader.querySelectorAll('.sw-line-gradient');
@@ -66,11 +78,16 @@ function isNarrow() { return window.innerWidth <= NARROW_BREAKPOINT; }
     });
   }, 2800);
 
-  // Step 4: Fade out loader + borders
+  // Step 4: Fade out loader + borders, unlock scroll
   setTimeout(function() {
     document.body.classList.remove('sw-borders-active');
     loader.classList.add('fade-out');
+
+    // Unlock scroll on both <html> and <body>, remove safety listeners
+    document.documentElement.classList.remove('loader-active');
     document.body.classList.remove('loader-active');
+    window.removeEventListener('scroll', forceScrollTop);
+    window.removeEventListener('wheel', blockWheel);
 
     setTimeout(function() {
       cancelAnimationFrame(gradAnimId);
